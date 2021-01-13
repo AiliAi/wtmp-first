@@ -1,103 +1,128 @@
-const minValue = 100;
-const maxValue = 200;
-const maxGuesses= 15;
+const coursesEn = [
+  "Hamburger, cream sauce and poiled potates",
+  "Goan style fish curry and whole grain rice",
+  "Vegan Chili sin carne and whole grain rice",
+  "Broccoli puree soup, side salad with two napas",
+  "Lunch baguette with BBQ-turkey filling",
+  "Cheese / Chicken / Vege / Halloum burger and french fries",
+];
 
-const minValueText = document.querySelector('.minValue');
-minValueText.innerHTML = ' ' + minValue + ' ';
-const maxValueText = document.querySelector('.maxValue');
-maxValueText.innerHTML = ' ' + maxValue;
-const maxGuessesText = document.querySelector('.maxGuesses');
-maxGuessesText.innerHTML = ' ' + maxGuesses + ' ';
+const coursesFi = [
+  "Jauhelihapihvi, ruskeaa kermakastiketta ja keitettyä perunaa",
+  "Goalaista kalacurrya ja täysjyväriisiä",
+  "vegaani Chili sin carne ja täysjyväriisi",
+  "Parsakeittoa,lisäkesalaatti kahdella napaksella",
+  "Lunch baguette with BBQ-turkey filling",
+  "Juusto / Kana / Kasvis / Halloumi burgeri ja ranskalaiset",
+];
 
+const restorant1 = document.querySelector(".restorants-list").childNodes[0];
+const language = document.querySelector(".language");
+const arrange = document.querySelector(".arrange");
+const random = document.querySelector(".random");
 
-// ******* counter and total guesses *******
-const totalGuessesText = document.querySelector('.totalGuesses');
-const counterText = document.querySelector('.counter');
-let counterStart = '';
-let counterEnd = '';
+//constant data
+language.innerHTML = "EN";
+for (const list of coursesFi) {
+  restorant1.innerHTML += list + "<br>";
+}
 
-let randomNumber = Math.floor(Math.random() * (maxValue - minValue) + minValue);
+/*
+//sort the array version1
+let sorted = false;
+arrange.addEventListener("click", () => {
+  restorant1.innerHTML = "";
 
-const guesses = document.querySelector('.guesses');
-const lastResult = document.querySelector('.lastResult');
-const lowOrHi = document.querySelector('.lowOrHi');
-
-const guessSubmit = document.querySelector('.guessSubmit');
-const guessField = document.querySelector('.guessField');
-
-let guessCount = 1;
-let resetButton;
-
-guessField.focus();
-
-const checkGuess = () => {
-  let userGuess = Number(guessField.value);
-  if (guessCount === 1) {
-    guesses.textContent = 'Previous guesses: ';
-    counterStart = Date.now();
-  }
-  guesses.textContent += userGuess + ' ';
-
-  if (userGuess === randomNumber) {
-    counterEnd = Date.now();
-    lastResult.textContent = 'Congratulations! You got it right!';
-    lastResult.style.backgroundColor = 'green';
-    lowOrHi.textContent = '';
-    lastResult.style.padding = '10px';
-    lastResult.style.textAlign = 'center';
-    let counter = Math.floor((counterEnd - counterStart) / 1000);
-    counterText.innerHTML = 'counter: ' + counter + ' seconds';
-    totalGuessesText.innerHTML = 'total guesses: ' + guessCount;
-    setGameOver();
-  } else if (guessCount === maxGuesses) {
-    lastResult.textContent = '!!!GAME OVER!!!';
-    setGameOver();
+  //sort desc
+  if (sorted == false) {
+    coursesEn.sort();
+    coursesFi.sort();
+    sorted = true;
+  //sort asc
   } else {
-    lastResult.textContent = 'Wrong!';
-    lastResult.style.backgroundColor = 'red';
-    lastResult.style.padding = '10px';
-    lastResult.style.textAlign = 'center';
-    if(userGuess < randomNumber) {
-      lowOrHi.textContent = 'Last guess was too low!';
-    } else if(userGuess > randomNumber) {
-      lowOrHi.textContent = 'Last guess was too high!';
+    coursesEn.reverse();
+    coursesFi.reverse();
+    sorted = false;
+  }
+
+  //print the sorted array
+  if (language.innerHTML == "FI") {
+    for (const list of coursesEn) {
+      restorant1.innerHTML += list + "<br>";
+    }
+  } else {
+    for (const list of coursesFi) {
+      restorant1.innerHTML += list + "<br>";
     }
   }
+});*/
 
-  guessCount++;
-  guessField.value = '';
-  guessField.focus();
-};
-
-guessSubmit.addEventListener('click', checkGuess);
-
-const setGameOver = () => {
-  guessField.disabled = true;
-  guessSubmit.disabled = true;
-  resetButton = document.createElement('button');
-  resetButton.textContent = 'Start new game';
-  resetButton.classList.add('play-again');
-  document.body.append(resetButton);
-  resetButton.addEventListener('click', resetGame);
-};
-
-const resetGame = () => {
-  guessCount = 1;
-
-  const resetParas = document.querySelectorAll('.resultParas p');
-  for (let i = 0 ; i < resetParas.length ; i++) {
-    resetParas[i].textContent = '';
+//sort the array version2
+let sorted = "asc";
+const arrangeList = (sorted, arr) => {
+  restorant1.innerHTML = "";
+  if (sorted == "desc") {
+    arr.sort();
+    arr.reverse();
+  } else {
+    arr.sort();
   }
-
-  resetButton.parentNode.removeChild(resetButton);
-
-  guessField.disabled = false;
-  guessSubmit.disabled = false;
-  guessField.value = '';
-  guessField.focus();
-
-  lastResult.style.backgroundColor = 'white';
-
-  randomNumber = Math.floor(Math.random() * (maxValue - minValue) + minValue);
+  for (const list of arr) {
+    restorant1.innerHTML += list + "<br>";
+  }
 };
 
+arrange.addEventListener("click", () => {
+  if (language.innerHTML == "FI") {
+    if (sorted == "desc") {
+      arrangeList("desc", coursesEn);
+      sorted = "asc";
+    } else {
+      arrangeList("asc", coursesEn);
+      sorted = "desc";
+    }
+  } else {
+    if (sorted == "desc") {
+      arrangeList("desc", coursesFi);
+      sorted = "asc";
+    } else {
+      arrangeList("asc", coursesFi);
+      sorted = "desc";
+    }
+  }
+});
+
+//change language
+const changeLanguage = () => {
+  restorant1.innerHTML = "";
+  if (language.innerHTML == "FI") {
+    language.innerHTML = "EN";
+    for (const list of coursesFi) {
+      restorant1.innerHTML += list + "<br>";
+    }
+  } else {
+    language.innerHTML = "FI";
+    for (const list of coursesEn) {
+      restorant1.innerHTML += list + "<br>";
+    }
+  }
+};
+
+language.addEventListener("click", changeLanguage);
+
+//get random food from array
+function getRandomIntInclusive(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
+}
+
+const randomFood = () => {
+  if (language.innerHTML == "EN") {
+    let randomNumber = getRandomIntInclusive(0, coursesFi.length - 1);
+    restorant1.innerHTML = coursesFi[randomNumber];
+  } else {
+    let randomNumber = getRandomIntInclusive(0, coursesEn.length - 1);
+    restorant1.innerHTML = coursesEn[randomNumber];
+  }
+};
+
+random.addEventListener("click", randomFood);

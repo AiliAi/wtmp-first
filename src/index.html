@@ -2,33 +2,51 @@
 <html>
   <head>
     <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= htmlWebpackPlugin.options.title %></title>
     <link rel="stylesheet" href="assets/styles.css">
   </head>
   <body>
-    <h1>Number guessing game</h1>
+    <nav>
+      <ul class="menu-left">
+        <li>Etusivu</li>
+        <li>Ruokalista</li>
+        <li>Ravintolat</li>
+        <li>Yhteysteidot</li>
+      </ul>
+      <div class="menu-right">
+        <input type="text" placeholder="etsi..."/>
+      </div>
+    </nav>
+    <header class="banner">
+        <div class="banner-left"></div>
+        <div class="banner-right"><img src="assets/food.jpg" alt="ruoka" /></div>
+    </header>
+    <main>
+      <section class="intro">
+        <p>
+          Missä tänään syötäisiin? Tuttu tarina ennen lounashetkeä.
+        </p>
+        <p>
+          Palvelu etsii lähelläsi olevat kounaspaikat, sekä näyttää niiden päivittäisen lounaslistan.
+          Viikottaiset lounaslistat ovat myös käytettävissäsi. Pääset niihin klikkaamalla ravintolan logoa.
+        </p>
+      </section>
 
-    <p class="middle">We have selected a random number between
-      <div class="middle minValue"></div>
-      and
-      <div class="middle maxValue"></div>
-      . See if you can guess it in
-      <div class="middle maxGuesses"></div>
-      turns or fewer. We'll tell you if your guess was too high or too low.
-    </p>
+      <div class="small-menu">
+        <button class="language"></button>
+        <button class="arrange">&#8693</button>
+        <button class="random">random</button>
+      </div>
 
-    <div class="form">
-      <label for="guessField">Enter a guess: </label>
-      <input type="text" id="guessField" class="guessField">
-      <input type="submit" value="Submit guess" class="guessSubmit">
-    </div>
+      <section class="restorants-list">
+        <article class="restorant">
 
-    <div class="resultParas">
-      <p class="guesses"></p>
-      <p class="lastResult"></p>
-      <p class="lowOrHi"></p>
-      <p class="counter"></p>
-      <p class="totalGuesses"></p>
-    </div>
+        </article>
+        <article class="restorant">
+
+        </article>
+      </section>
+    </main>
   </body>
 </html>
