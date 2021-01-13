@@ -6,9 +6,29 @@
     <link rel="stylesheet" href="assets/styles.css">
   </head>
   <body>
-    <p>
-      Hello! Open the developer tools, please.<br />
-      Start by editing the files in <code>src/</code> folder.
+    <h1>Number guessing game</h1>
+
+    <p class="middle">We have selected a random number between
+      <div class="middle minValue"></div>
+      and
+      <div class="middle maxValue"></div>
+      . See if you can guess it in
+      <div class="middle maxGuesses"></div>
+      turns or fewer. We'll tell you if your guess was too high or too low.
     </p>
+
+    <div class="form">
+      <label for="guessField">Enter a guess: </label>
+      <input type="text" id="guessField" class="guessField">
+      <input type="submit" value="Submit guess" class="guessSubmit">
+    </div>
+
+    <div class="resultParas">
+      <p class="guesses"></p>
+      <p class="lastResult"></p>
+      <p class="lowOrHi"></p>
+      <p class="counter"></p>
+      <p class="totalGuesses"></p>
+    </div>
   </body>
 </html>
