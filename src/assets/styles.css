@@ -10,52 +10,72 @@ body {
   background-color: rgb(240, 240, 240);
 }
 
-ul {
+nav {
+  display: flex;
+  flex-direction: row;
+  margin: 0.3em 3em;
+  color: brown;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+nav > ul {
+  display: flex;
+  flex: 1;
   list-style-type: none;
 }
 
-nav {
+.menu {
   display: flex;
-  justify-content: space-between;
-  margin: 0.3em 3em;
-  color: brown;
+  flex: 70%;
 }
-
-.menu-left {
-  display: flex;
-}
-
-li {
+.menu > li {
   padding: 0.7em;
   font-size: 1.4em;
 }
 
-.menu-right {
+.search {
+  position: relative;
   display: flex;
 }
 
-.menu-right > input {
+.search > input {
   padding: 0.5em;
+  padding-left: 1.7em;
   margin: 0.9em;
   border: 1px solid brown;
   border-radius: 7px;
   background-color: transparent;
-  width: 20vw;
+  min-width: 20vh;
+  width: 100%;
   font-size: 1em;
 }
 
+.search i {
+  position: absolute;
+  top: 25px;
+  right: 225px;
+}
 
 .banner {
   display: flex;
   flex: 1;
   height: 30vh;
-  overflow: hidden;
   background-color: rgb(4, 214, 4);
 }
 
 .banner-left {
   display: flex;
   flex: 1;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.big-text {
+  font-size: 2em;
+  font-weight: 700;
 }
 
 .banner-right {
@@ -66,7 +86,8 @@ li {
 
 
 .banner-right > img{
-  height: 100vh;
+  height: 40vw;
+  object-fit: cover;
   clip-path: polygon(0 100%, 100% 0, 0 0);
   transform: rotate(180deg);
   transform: scaleX(-1);
@@ -89,17 +110,28 @@ main {
 
 .restorants-list {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .restorant {
   display: flex;
   width: 30em;
   height: 15em;
-  border: 1px dotted black;
+  border: 1px dashed brown;
   margin: 3em;
   margin-top: 0;
   border-radius: 12px;
-  padding: 20px;
+  flex-direction: column;
+  padding: 1em;
+}
+
+.restorant > ul {
+  list-style-type: none;
+  padding-top: 1em;
+}
+
+.restorant > li {
+  font-size: 1em;
 }
 
 .triangle-bottom {
@@ -128,6 +160,10 @@ button {
   margin: 10px;
 }
 
-.language, .arrange {
-  width: 30px;
+.language, #sort-menu {
+  width: 3em;
+}
+
+.random {
+  width: 8em;
 }

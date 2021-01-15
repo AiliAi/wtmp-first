@@ -2,24 +2,29 @@
 <html>
   <head>
     <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= htmlWebpackPlugin.options.title %></title>
     <link rel="stylesheet" href="assets/styles.css">
+    <script src="https://kit.fontawesome.com/f597d13d63.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <nav>
-      <ul class="menu-left">
+      <ul class="menu">
         <li>Etusivu</li>
         <li>Ruokalista</li>
         <li>Ravintolat</li>
         <li>Yhteysteidot</li>
       </ul>
-      <div class="menu-right">
+      <div class="search">
+        <i class="fas fa-search"></i>
         <input type="text" placeholder="etsi..."/>
       </div>
     </nav>
     <header class="banner">
-        <div class="banner-left"></div>
+        <div class="banner-left">
+          <p class="big-text">LOUNARI.</p>
+          <p>Missä tänään syötäisiin?</p>
+        </div>
+        </div>
         <div class="banner-right"><img src="assets/food.jpg" alt="ruoka" /></div>
     </header>
     <main>
@@ -34,14 +39,16 @@
       </section>
 
       <div class="small-menu">
-        <button class="language"></button>
-        <button class="arrange">&#8693</button>
-        <button class="random">random</button>
+        <button id="switch-lang" class="language"></button>
+        <button id="sort-menu">&#8693</button>
+        <button id="pick-dish" class="random"></button>
       </div>
 
       <section class="restorants-list">
         <article class="restorant">
-
+          <h2>Sodexo</h2>
+          <ul id="sodexo">
+          </ul>
         </article>
         <article class="restorant">
 
