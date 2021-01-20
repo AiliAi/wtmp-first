@@ -8,7 +8,7 @@ const maxValueText = document.querySelector('.maxValue');
 maxValueText.innerHTML = ' ' + maxValue;
 const maxGuessesText = document.querySelector('.maxGuesses');
 maxGuessesText.innerHTML = ' ' + maxGuesses + ' ';
-
+const btnRobotPlay = document.querySelector('.robot-play');
 
 // ******* counter and total guesses *******
 const totalGuessesText = document.querySelector('.totalGuesses');
@@ -83,6 +83,9 @@ const setGameOver = () => {
 
 const resetGame = () => {
   guessCount = 1;
+  robotQuess = maxValue - Math.floor((maxValue - minValue) / 2);
+  newMax = 0;
+  newMin = 0;
 
   const resetParas = document.querySelectorAll('.resultParas p');
   for (let i = 0 ; i < resetParas.length ; i++) {
@@ -101,3 +104,70 @@ const resetGame = () => {
   randomNumber = Math.floor(Math.random() * (maxValue - minValue) + minValue);
 };
 
+let robotAlgorithm = () => {
+  centerValue = maxValue - Math.floor(maxValue - oldCenterValue / 2);
+
+};
+//robot algorithm
+let robotQuess = maxValue - Math.floor((maxValue - minValue) / 2);
+let newMax = 0;
+let newMin = 0;
+console.log(robotQuess);
+
+const robotPlay = () => {
+if (guessCount === 1) {
+    guesses.textContent = 'Previous guesses: ';
+  }
+
+  while (guessCount <= maxGuesses) {
+    guesses.textContent += robotQuess + ' ';
+    if (robotQuess === randomNumber) {
+      setGameOver();
+      break;
+    } else if (guessCount === maxGuesses) {
+      setGameOver();
+      break;
+    } else {
+      if (robotQuess > randomNumber) {
+        if (newMax == 0) {
+          newMax = robotQuess;
+          robotQuess -= Math.floor((maxValue - robotQuess) / 2);
+          console.log('random: ' + randomNumber);
+          console.log(robotQuess);
+        } else if (newMin !== 0) {
+            newMax = robotQuess;
+            robotQuess -= Math.floor((robotQuess - newMin) / 2);
+            console.log('random: ' + randomNumber);
+            console.log(robotQuess);
+        } else {
+          newMax = robotQuess;
+          robotQuess -= Math.floor((robotQuess - minValue) / 2);
+          console.log('random: ' + randomNumber);
+          console.log(robotQuess);
+        }
+      } else if (robotQuess < randomNumber){
+        if (newMin == 0) {
+          newMin = robotQuess;
+          robotQuess += Math.ceil((maxValue - robotQuess) / 2);
+          console.log('random: ' + randomNumber);
+          console.log(robotQuess);
+        } else if (newMax == 0) {
+          robotQuess += Math.ceil((newMin + robotQuess) / 2);
+          console.log('random: ' + randomNumber);
+          console.log(robotQuess);
+        } else {
+          newMin = robotQuess;
+          robotQuess += Math.ceil((newMax - robotQuess) / 2);
+          console.log('random: ' + randomNumber);
+          console.log(robotQuess);
+        }
+      }
+      guessCount++;
+    }
+  }
+};
+
+//let robot play
+btnRobotPlay.addEventListener('click', () => {
+  robotPlay();
+});
