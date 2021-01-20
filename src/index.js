@@ -1,145 +1,127 @@
-/*import sayHello from "./moduls/test-moduls.js";
-console.log(sayHello('Aili'));*/
+const data = [
+  { name: "Lingonberry jam", price: 4.0 },
+  { name: "Mushroom and bean casserole", price: 5.5 },
+  { name: "Chili-flavoured wheat", price: 3.0 },
+  { name: "Vegetarian soup", price: 4.8 },
+  { name: "Pureed root vegetable soup with smoked cheese", price: 8.0 },
+];
 
-/*import {sayHello} from "./moduls/test-moduls.js";
-import {setting} from "./moduls/test-moduls.js";
-console.log(sayHello('Aili'));
-console.log('application lang:', setting.lang);*/
+//create buttons
+const menu = document.querySelector(".small-menu");
+const btnVal = document.createElement("button");
+btnVal.textContent = "validate";
+menu.appendChild(btnVal);
 
+const btnSort = document.createElement("button");
+btnSort.textContent = "sort";
+menu.appendChild(btnSort);
 
-/*import myModule from './moduls/test-moduls.js';
-console.log('application lang:', myModule.setting.lang);
-console.log(myModule.sayHello('Aili'));*/
+const btnFilter = document.createElement("button");
+btnFilter.textContent = "filter";
+menu.appendChild(btnFilter);
 
-import Lunchmenu from "./assets/sodexo-menu.json";
+const btnMap = document.createElement("button");
+btnMap.textContent = "map";
+menu.appendChild(btnMap);
 
-console.log("lunch menu json", Lunchmenu);
+const btnReduce = document.createElement("button");
+btnReduce.textContent = "Reduce";
+menu.appendChild(btnReduce);
 
-let coursesEn = [];
-let coursesFi = [];
-let languageSetting = "fi";
+//validate the name
+const validateName = menu => {
+  const regexpPattern = new RegExp('/^[A-ZÖÄÅ]{1}[a-zöäå][0-9][" ", ",", "-", "/", "(", ")"]{4,64}$/m');
+  let res = true;
+  for (const item of menu) {
+    if (!regexpPattern.test(item)) {
+      console.log(`Wont Match '${regexpPattern}'`);
+      res = false;
+    }
+    return res;
+  };
+};
+console.log(validateName(data));
 
-let language = document.querySelector(".language");
-language.innerHTML = "EN";
-let random = document.querySelector(".random");
-random.innerHTML = "satunnainen";
-
-/**
- * Displays lunch menu items as html list
- *
- * @param {Array} menu - Lunch menu array
- */
+//render a menu
 const renderMenu = (menu) => {
-  const list = document.querySelector("#sodexo");
+  const list = document.querySelector(".restorant");
   list.innerHTML = "";
   for (const item of menu) {
     const listItem = document.createElement("li");
-    listItem.textContent = item;
+    listItem.textContent = item.name + ", " + item.price + " €";
     list.appendChild(listItem);
   }
 };
 
-/**
- * Switch app lang en/fi
- */
-const switchLanguage = () => {
-  if (languageSetting === "fi") {
-    language.innerHTML = "FI";
-    random.innerHTML = "pick a dish";
-    languageSetting = "en";
-    renderMenu(coursesEn);
-  } else {
-    language.innerHTML = "EN";
-    random.innerHTML = "satunnainen";
-    languageSetting = "fi";
-    renderMenu(coursesFi);
+//Always first sort by name
+data.sort(function (a, b) {
+  var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+  var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+  if (nameA < nameB) {
+    return -1;
   }
-  console.log("change language to: ", languageSetting);
-};
-
-/**
- * Sorts menu alphapetically
- *
- * @param {Array} menu
- * @param {string} order
- * @returns Sorted menu array
- */
-const sortMenu = (menu, order) => {
-  if (order == "desc") {
-    return menu.sort().reverse();
-  } else {
-    return menu.sort();
+  if (nameA > nameB) {
+    return 1;
   }
+  // names must be equal
+  return 0;
+});
+
+//sort by value when pressed button
+const sortMenu = (menu) => {
+  menu.sort((a, b) => {
+    return a.price - b.price;
+  });
+  renderMenu(data);
 };
 
-let ascEn = false;
-let ascFi = false;
-/**
- * Eventhandler for sort menu button
- */
-const renderSortedMenu = () => {
-  if (languageSetting === "en") {
-    if (ascEn == false) {
-      renderMenu(sortMenu(coursesEn, "asc"));
-      ascEn = true;
-    } else {
-      renderMenu(sortMenu(coursesEn, "desc"));
-      ascEn = false;
-    }
-  } else {
-    if (ascFi == false) {
-      renderMenu(sortMenu(coursesFi, "asc"));
-      ascFi = true;
-    } else {
-      renderMenu(sortMenu(coursesFi, "desc"));
-      ascFi = false;
-    }
+//filter
+function filteredByprice(item) {
+  if (item.price < 5) {
+    return item;
   }
+}
+
+let filterMenu = (menu) => {
+  let ArrByPrice = menu.filter(filteredByprice);
+  renderMenu(ArrByPrice);
 };
 
-/**
- * Picks a random dish from lunch menu array
- *
- * @param {Array} menu
- * @returns string dish name
- */
-const pickRandomDish = (menu) => {
-  const randomIndex = Math.floor(Math.random() * menu.length);
-  return menu[randomIndex];
-};
+//map
+const mapByPrice = item => {
+  let newPrice = item * 1.15;
+  let rounded = Number(Math.round(newPrice+'e'+2)+'e-'+2);
+    return rounded;
+  };
 
-const displayRandomDish = () => {
-  if (languageSetting === "fi") {
-  alert(pickRandomDish(coursesFi));
-  } else {
-    alert(pickRandomDish(coursesEn));
-  }
-};
+const mapMenu = data.map(item => {
+  const container = {};
+  container.name = item.name;
+  container.price = mapByPrice(item.price);
+  return container;
+});
 
-/**
- * Parses couse arrays from Sodexo json file
- *
- * @param {Object} sodexoDailyMenu
- */
-const parseSodexoMenu = (sodexoDailyMenu) => {
-  const courses = Object.values(sodexoDailyMenu);
-  for (const course of courses) {
-    coursesEn.push(course.title_en);
-    coursesFi.push(course.title_fi);
-  }
-};
+//Reduce
+const reduceMenu = data.reduce(function (acc, obj) { return acc + obj.price; }, 0);
+console.log(reduceMenu);
 
+//init
 const init = () => {
-  parseSodexoMenu(Lunchmenu.courses);
-  document
-    .querySelector("#switch-lang")
-    .addEventListener("click", switchLanguage);
-  document
-    .querySelector("#sort-menu")
-    .addEventListener("click", renderSortedMenu);
-  document
-    .querySelector("#pick-dish")
-    .addEventListener("click", displayRandomDish);
-  renderMenu(coursesFi);
+  btnVal.addEventListener("click", () => {
+    window.alert(validateName(data));
+  });
+  btnSort.addEventListener("click", () => {
+    sortMenu(data);
+  });
+  btnFilter.addEventListener("click", () => {
+    filterMenu(data);
+  });
+  btnMap.addEventListener("click", () => {
+    renderMenu(mapMenu);
+  });
+  btnReduce.addEventListener("click", () => {
+    window.alert(reduceMenu);
+  });
+  renderMenu(data);
 };
 init();
