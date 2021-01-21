@@ -11,6 +11,7 @@ console.log('application lang:', setting.lang);*/
 console.log('application lang:', myModule.setting.lang);
 console.log(myModule.sayHello('Aili'));*/
 import SodexoData from './modules/sodexo-data.js';
+import FazerData from './modules/fazer-data.js';
 
 let languageSetting = "fi";
 
@@ -35,6 +36,22 @@ const renderMenu = (menu) => {
 };
 
 /**
+ * Displays lunch menu items as html list
+ *
+ * @param {Array} menu - Lunch menu array
+ */
+const renderMenu2 = (menu) => {
+  const list = document.querySelector("#fazer");
+  list.innerHTML = "";
+  for (const item of menu) {
+    const listItem = document.createElement("li");
+    listItem.textContent = item;
+    list.appendChild(listItem);
+  }
+};
+
+
+/**
  * Switch app lang en/fi
  */
 const switchLanguage = () => {
@@ -43,11 +60,13 @@ const switchLanguage = () => {
     random.innerHTML = "pick a dish";
     languageSetting = "en";
     renderMenu(SodexoData.coursesEn);
+    renderMenu2(FazerData.coursesEn);
   } else {
     language.innerHTML = "EN";
     random.innerHTML = "satunnainen";
     languageSetting = "fi";
     renderMenu(SodexoData.coursesFi);
+    renderMenu2(FazerData.coursesFi);
   }
   console.log("change language to: ", languageSetting);
 };
@@ -76,17 +95,21 @@ const renderSortedMenu = () => {
   if (languageSetting === "en") {
     if (ascEn == false) {
       renderMenu(sortMenu(SodexoData.coursesEn, "asc"));
+      renderMenu2(sortMenu(FazerData.coursesEn, "asc"));
       ascEn = true;
     } else {
       renderMenu(sortMenu(SodexoData.coursesEn, "desc"));
+      renderMenu2(sortMenu(FazerData.coursesEn, "desc"));
       ascEn = false;
     }
   } else {
     if (ascFi == false) {
       renderMenu(sortMenu(SodexoData.coursesFi, "asc"));
+      renderMenu2(sortMenu(FazerData.coursesFi, "asc"));
       ascFi = true;
     } else {
       renderMenu(sortMenu(SodexoData.coursesFi, "desc"));
+      renderMenu2(sortMenu(FazerData.coursesFi, "desc"));
       ascFi = false;
     }
   }
@@ -122,6 +145,7 @@ const init = () => {
     .querySelector("#pick-dish")
     .addEventListener("click", displayRandomDish);
   renderMenu(SodexoData.coursesFi);
+  renderMenu2(FazerData.coursesFi);
   //TODO: render fazer data on page (use fazer-data.js module)
 };
 init();

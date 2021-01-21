@@ -20,5 +20,6 @@ const parseSodexoMenu = (sodexoDailyMenu) => {
 parseSodexoMenu(Lunchmenu.courses);
 
 const SodexoData = {coursesEn, coursesFi};
+console.log('sodexo parsed json file', SodexoData);
 
 export default SodexoData;

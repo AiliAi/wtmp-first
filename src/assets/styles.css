@@ -178,7 +178,7 @@ nav > ul {
 .restorant {
   display: flex;
   width: 35em;
-  height: 17em;
+  height: 21em;
   border: 2px dashed var(--brown);
   margin: 2em;
   margin-top: 0;
@@ -192,11 +192,11 @@ nav > ul {
   padding: 1em;
 }
 
-.sodexo {
+.restorant-logo {
   font-size: 0.625em;
   padding: 1em;
   padding-right: 0;
-  height: 15vh;
+  height: 15em;
 }
 
 .location {
@@ -206,13 +206,13 @@ nav > ul {
 
 .location > h2 {
   display: inline;
-  font-size: 1.4375em;
+  font-size: 1.4em;
   font-family: var(--lato);
   font-weight: 700;
 }
 
 .location > svg {
-  margin-left: 2.5em;
+  margin-left: 0em;
   position: absolute;
   top: 0.125em;
   left: 7.5em;
@@ -226,7 +226,8 @@ nav > ul {
 }
 
 .distance {
-  padding-left: 2.7em;
+  position: absolute;
+  left: 6.5em;
 }
 
 .small-menu > button {
