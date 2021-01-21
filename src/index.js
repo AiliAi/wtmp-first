@@ -10,13 +10,8 @@ console.log('application lang:', setting.lang);*/
 /*import myModule from './moduls/test-moduls.js';
 console.log('application lang:', myModule.setting.lang);
 console.log(myModule.sayHello('Aili'));*/
+import SodexoData from './modules/sodexo-data.js';
 
-import Lunchmenu from "./assets/sodexo-menu.json";
-
-console.log("lunch menu json", Lunchmenu);
-
-let coursesEn = [];
-let coursesFi = [];
 let languageSetting = "fi";
 
 let language = document.querySelector(".language");
@@ -47,12 +42,12 @@ const switchLanguage = () => {
     language.innerHTML = "FI";
     random.innerHTML = "pick a dish";
     languageSetting = "en";
-    renderMenu(coursesEn);
+    renderMenu(SodexoData.coursesEn);
   } else {
     language.innerHTML = "EN";
     random.innerHTML = "satunnainen";
     languageSetting = "fi";
-    renderMenu(coursesFi);
+    renderMenu(SodexoData.coursesFi);
   }
   console.log("change language to: ", languageSetting);
 };
@@ -80,18 +75,18 @@ let ascFi = false;
 const renderSortedMenu = () => {
   if (languageSetting === "en") {
     if (ascEn == false) {
-      renderMenu(sortMenu(coursesEn, "asc"));
+      renderMenu(sortMenu(SodexoData.coursesEn, "asc"));
       ascEn = true;
     } else {
-      renderMenu(sortMenu(coursesEn, "desc"));
+      renderMenu(sortMenu(SodexoData.coursesEn, "desc"));
       ascEn = false;
     }
   } else {
     if (ascFi == false) {
-      renderMenu(sortMenu(coursesFi, "asc"));
+      renderMenu(sortMenu(SodexoData.coursesFi, "asc"));
       ascFi = true;
     } else {
-      renderMenu(sortMenu(coursesFi, "desc"));
+      renderMenu(sortMenu(SodexoData.coursesFi, "desc"));
       ascFi = false;
     }
   }
@@ -110,27 +105,13 @@ const pickRandomDish = (menu) => {
 
 const displayRandomDish = () => {
   if (languageSetting === "fi") {
-  alert(pickRandomDish(coursesFi));
+  alert(pickRandomDish(SodexoData.coursesFi));
   } else {
-    alert(pickRandomDish(coursesEn));
-  }
-};
-
-/**
- * Parses couse arrays from Sodexo json file
- *
- * @param {Object} sodexoDailyMenu
- */
-const parseSodexoMenu = (sodexoDailyMenu) => {
-  const courses = Object.values(sodexoDailyMenu);
-  for (const course of courses) {
-    coursesEn.push(course.title_en);
-    coursesFi.push(course.title_fi);
+    alert(pickRandomDish(SodexoData.coursesEn));
   }
 };
 
 const init = () => {
-  parseSodexoMenu(Lunchmenu.courses);
   document
     .querySelector("#switch-lang")
     .addEventListener("click", switchLanguage);
@@ -140,6 +121,7 @@ const init = () => {
   document
     .querySelector("#pick-dish")
     .addEventListener("click", displayRandomDish);
-  renderMenu(coursesFi);
+  renderMenu(SodexoData.coursesFi);
+  //TODO: render fazer data on page (use fazer-data.js module)
 };
 init();
