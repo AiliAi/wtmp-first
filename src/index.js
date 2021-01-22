@@ -84,8 +84,8 @@ const setGameOver = () => {
 const resetGame = () => {
   guessCount = 1;
   robotQuess = maxValue - Math.floor((maxValue - minValue) / 2);
-  newMax = 0;
-  newMin = 0;
+  ceilingMax = 0;
+  floorMin = 0;
 
   const resetParas = document.querySelectorAll(".resultParas p");
   for (let i = 0; i < resetParas.length; i++) {
@@ -107,12 +107,12 @@ const resetGame = () => {
 };
 
 //robot algorithm for html, robotAlgorithm with statistics for the console.log at the bottom of the document
-let robotQuess = maxValue - Math.floor((maxValue - minValue) / 2);
-let newMax = maxValue;
-let newMin = minValue;
-console.log(robotQuess);
-
 const robotPlay = () => {
+  let robotQuess = maxValue - Math.floor((maxValue - minValue) / 2);
+  let ceilingMax = maxValue;
+  let floorMin = minValue;
+  guessCount = 1;
+
   if (guessCount === 1) {
     guesses.textContent = "Previous guesses: ";
   }
@@ -127,39 +127,11 @@ const robotPlay = () => {
       break;
     } else {
       if (robotQuess > randomNumber) {
-        if (newMax == 0 && newMin == 0) {
-          newMax = robotQuess;
-          robotQuess -= Math.floor((maxValue - robotQuess) / 2);
-          console.log("random: " + randomNumber);
-          console.log(robotQuess);
-        } else if (newMin !== 0) {
-          newMax = robotQuess;
-          robotQuess -= Math.floor((robotQuess - newMin) / 2);
-          console.log("random: " + randomNumber);
-          console.log(robotQuess);
-        } else {
-          newMax = robotQuess;
-          robotQuess -= Math.ceil((robotQuess - minValue) / 2);
-          console.log("random: " + randomNumber);
-          console.log(robotQuess);
-        }
-      } else if (robotQuess < randomNumber) {
-        if (newMin == 0 && newMax == 0) {
-          newMin = robotQuess;
-          robotQuess += Math.floor((maxValue - robotQuess) / 2);
-          console.log("random: " + randomNumber);
-          console.log(robotQuess);
-        } else if (newMax == 0) {
-          newMin = robotQuess;
-          robotQuess += Math.floor((maxValue - newMin) / 2);
-          console.log("random: " + randomNumber);
-          console.log(robotQuess);
-        } else {
-          newMin = robotQuess;
-          robotQuess += Math.floor((newMax - robotQuess) / 2);
-          console.log("random: " + randomNumber);
-          console.log(robotQuess);
-        }
+        ceilingMax = robotQuess;
+        robotQuess -= Math.ceil((robotQuess - floorMin) / 2);
+      } else {
+        floorMin = robotQuess;
+        robotQuess += Math.floor((ceilingMax - robotQuess) / 2);
       }
       guessCount++;
     }
@@ -194,7 +166,7 @@ let robotAlgorithm = () => {
   let losses = 0;
   let totalQuessMin = 0;
   let totalQuessMax = 0;
-  let maxTimePlayed = 10;
+  let maxTimePlayed = 2;
   let totalQuessAverage = [];
 
   //robot plays theoreticalMax times
@@ -204,14 +176,14 @@ let robotAlgorithm = () => {
     //first robot quess, always from the middle of min and max
     let robotQuess = maxValue - Math.floor((maxValue - minValue) / 2);
     const maxGuessesforRobot = maxGuesses;
-    let newMax = maxValue;
-    let newMin = minValue;
+    let ceilingMax = maxValue;
+    let floorMin = minValue;
     randomNumber = Math.floor(Math.random() * (maxValue - minValue) + minValue);
     console.log("random number: ", randomNumber);
     guessCount = 1;
 
     //loop for robot play
-    while (guessCount < maxTimePlayed) {
+    while (guessCount < maxGuessesforRobot) {
       robotArray.push(robotQuess);
 
       //when robot wins
@@ -228,30 +200,14 @@ let robotAlgorithm = () => {
       } else {
         //when quessed number was bigger than random
         if (robotQuess > randomNumber) {
-          //algorithm sets an new max value
-          if (newMax == 0 && newMin == 0) {
-            newMax = robotQuess;
-            robotQuess -= Math.floor((maxValue - robotQuess) / 2);
-          } else if (newMin !== 0) {
-            newMax = robotQuess;
-            robotQuess -= Math.floor((robotQuess - newMin) / 2);
-          } else {
-            newMax = robotQuess;
-            robotQuess -= Math.ceil((robotQuess - minValue) / 2);
-          }
+            //algorithm sets an new max value
+            ceilingMax = robotQuess;
+            robotQuess -= Math.ceil((robotQuess - floorMin) / 2);
         //when quessed number was smaller than random
-        } else if (robotQuess < randomNumber) {
-          //algorithm sets an new min value
-          if (newMin == 0 && newMax == 0) {
-            newMin = robotQuess;
-            robotQuess += Math.floor((maxValue - robotQuess) / 2);
-          } else if (newMax == 0) {
-            newMin = robotQuess;
-            robotQuess += Math.floor((maxValue - newMin) / 2);
-          } else {
-            newMin = robotQuess;
-            robotQuess += Math.floor((newMax - robotQuess) / 2);
-          }
+        } else {
+            //algorithm sets an new min value
+            floorMin = robotQuess;
+            robotQuess += Math.floor((ceilingMax - robotQuess) / 2);
         }
       //counts all quesses
       guessCount++;
