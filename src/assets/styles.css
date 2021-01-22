@@ -52,3 +52,19 @@ input {
   border: 0px solid;
   cursor: pointer;
 }
+
+.let-robot-play {
+  display: inline;
+}
+
+.robot-play {
+  background-color: #ffffff;
+  border-radius: 7px;
+  font-weight: 700;
+  color: #005C7A;
+  font-size: 1em;
+  padding: 10px;
+  border: 2px solid #005C7A;
+  cursor: pointer;
+}
+

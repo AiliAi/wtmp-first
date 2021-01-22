@@ -1,5 +1,5 @@
-const minValue = 0;
-const maxValue = 100;
+const minValue = 100;
+const maxValue = 200;
 const maxGuesses = 15;
 
 const minValueText = document.querySelector(".minValue");
@@ -10,7 +10,7 @@ const maxGuessesText = document.querySelector(".maxGuesses");
 maxGuessesText.innerHTML = " " + maxGuesses + " ";
 const btnRobotPlay = document.querySelector(".robot-play");
 
-// ******* counter and total guesses *******
+//counter and total guesses
 const totalGuessesText = document.querySelector(".totalGuesses");
 const counterText = document.querySelector(".counter");
 let counterStart = "";
@@ -102,9 +102,11 @@ const resetGame = () => {
   lastResult.style.backgroundColor = "white";
 
   randomNumber = Math.floor(Math.random() * (maxValue - minValue) + minValue);
+
+  letRobotPlaybtn.disabled = false;
 };
 
-//robot algorithm
+//robot algorithm for html, robotAlgorithm with statistics for the console.log at the bottom of the document
 let robotQuess = maxValue - Math.floor((maxValue - minValue) / 2);
 let newMax = maxValue;
 let newMin = minValue;
@@ -165,45 +167,68 @@ const robotPlay = () => {
   totalGuessesText.innerHTML = "total guesses: " + guessCount;
 };
 
-//let robot play
-btnRobotPlay.addEventListener("click", () => {
+//create let robot play button
+const letRobotPlay = document.querySelector(".let-robot-play");
+let letRobotPlaybtn = document.createElement("button");
+letRobotPlaybtn.textContent = "Let a robot play";
+letRobotPlaybtn.classList.add("robot-play");
+letRobotPlay.append(letRobotPlaybtn);
+letRobotPlay.addEventListener("click", () => {
+  letRobotPlaybtn.disabled = true;
   robotPlay();
-});
+  });
 
 
-//robot algorithm
+/**
+ * robot play Algorith in console.log with statistics
+ *
+ * how algorith works:
+ * it always tries to guess number from the middle of minimum and maximum values.
+ * if the quessed number is too big, algorith sets a new minimum value
+ * if the quessed number is too small, algorith sets a new maximum value
+ *
+ */
 let robotAlgorithm = () => {
-  guessCount = 0;
-  let robotArray = [];
-  let robotQuess = maxValue - Math.floor((maxValue - minValue) / 2);
-  let newMax = maxValue;
-  let newMin = minValue;
-  console.log(robotQuess);
+  //for statistics
   let wins = 0;
   let losses = 0;
   let totalQuessMin = 0;
   let totalQuessMax = 0;
-  let totalQuessAverage = 0;
+  let maxTimePlayed = 10;
+  let totalQuessAverage = [];
 
-  for (let i = 0; i < 100; i++) {
+  //robot plays theoreticalMax times
+  for (let i = 0; i < maxTimePlayed; i++) {
+    //creates array for all robot quessed values
+    let robotArray = [];
+    //first robot quess, always from the middle of min and max
+    let robotQuess = maxValue - Math.floor((maxValue - minValue) / 2);
+    const maxGuessesforRobot = maxGuesses;
+    let newMax = maxValue;
+    let newMin = minValue;
     randomNumber = Math.floor(Math.random() * (maxValue - minValue) + minValue);
-    if (guessCount === 1) {
-      console.log("Previous guesses: ");
-    }
+    console.log("random number: ", randomNumber);
+    guessCount = 1;
 
-    while (guessCount <= maxGuesses) {
+    //loop for robot play
+    while (guessCount < maxTimePlayed) {
       robotArray.push(robotQuess);
 
+      //when robot wins
       if (robotQuess === randomNumber) {
         console.log("You won!");
         wins++;
         break;
-      } else if (guessCount === maxGuesses) {
+      //when robot looses
+      } else if (guessCount === maxGuessesforRobot) {
         console.log("Game Over!");
         losses++;
         break;
+      //when robot quesses
       } else {
+        //when quessed number was bigger than random
         if (robotQuess > randomNumber) {
+          //algorithm sets an new max value
           if (newMax == 0 && newMin == 0) {
             newMax = robotQuess;
             robotQuess -= Math.floor((maxValue - robotQuess) / 2);
@@ -214,7 +239,9 @@ let robotAlgorithm = () => {
             newMax = robotQuess;
             robotQuess -= Math.ceil((robotQuess - minValue) / 2);
           }
+        //when quessed number was smaller than random
         } else if (robotQuess < randomNumber) {
+          //algorithm sets an new min value
           if (newMin == 0 && newMax == 0) {
             newMin = robotQuess;
             robotQuess += Math.floor((maxValue - robotQuess) / 2);
@@ -226,12 +253,15 @@ let robotAlgorithm = () => {
             robotQuess += Math.floor((newMax - robotQuess) / 2);
           }
         }
-        guessCount++;
+      //counts all quesses
+      guessCount++;
       }
     }
+    //prints an array after the game has finished
     for (quess of robotArray) {
       console.log(quess);
     }
+    //for statistics, calculates what is the min and max number for total guess counts
     if (totalQuessMin == 0 && totalQuessMax == 0) {
       totalQuessMin = guessCount;
       totalQuessMax = guessCount;
@@ -240,9 +270,17 @@ let robotAlgorithm = () => {
     } else if (totalQuessMin > guessCount) {
       totalQuessMin = guessCount;
     }
-    console.log(randomNumber);
-    console.log('min total guess count: ' + totalQuessMin);
-    console.log('max total guess count: ' + totalQuessMax);
+    //pushes all values in array for average total guess counts
+    totalQuessAverage.push(guessCount);
+
+    console.log('Total quesses:', guessCount);
+    console.log('minimum number of total guess counts:', totalQuessMin);
+    console.log('maximum number of total guess counts:', totalQuessMax);
+    console.log('theoretical maximum:', maxGuesses);
+    //calculates average total quess counts
+    let sum = totalQuessAverage.reduce((previous, current) => current += previous);
+    let avg = Math.floor(sum / totalQuessAverage.length);
+    console.log('average number of total guess counts', avg);
   }
   console.log('Total wins:' + wins);
   console.log('Total losses:' + losses);
