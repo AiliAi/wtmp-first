@@ -21,7 +21,7 @@ let random = document.querySelector(".random");
 random.innerHTML = "satunnainen";
 
 /**
- * Displays lunch menu items as html list
+ * Displays Sodexo lunch menu items as html list
  *
  * @param {Array} menu - Lunch menu array
  */
@@ -36,7 +36,7 @@ const renderMenu = (menu) => {
 };
 
 /**
- * Displays lunch menu items as html list
+ * Displays Fazer lunch menu items as html list
  *
  * @param {Array} menu - Lunch menu array
  */
@@ -116,7 +116,7 @@ const renderSortedMenu = () => {
 };
 
 /**
- * Picks a random dish from lunch menu array
+ * Picks a random dish from Sodexo lunch menu array
  *
  * @param {Array} menu
  * @returns string dish name
@@ -134,6 +134,17 @@ const displayRandomDish = () => {
   }
 };
 
+/**
+ * Picks all vegeterian dishes from Fazer lunch menu array
+ */
+const displayVegMenu = () => {
+  if (languageSetting === "fi") {
+    alert(FazerData.vegeMealsFi);
+  } else {
+    alert(FazerData.vegeMealsEn);
+  }
+};
+
 const init = () => {
   document
     .querySelector("#switch-lang")
@@ -144,6 +155,9 @@ const init = () => {
   document
     .querySelector("#pick-dish")
     .addEventListener("click", displayRandomDish);
+  document
+    .querySelector(".vegeMeals")
+    .addEventListener("click", displayVegMenu);
   renderMenu(SodexoData.coursesFi);
   renderMenu2(FazerData.coursesFi);
   //TODO: render fazer data on page (use fazer-data.js module)

@@ -13,6 +13,8 @@ console.log("lunch menu Fazer En", LunchmenuFazerEn);
 
 let coursesEn = [];
 let coursesFi = [];
+let vegeMealsEn = [];
+let vegeMealsFi = [];
 
 /**
  * Parses course arrays from Fazer Fi json file
@@ -26,12 +28,16 @@ const parseFazerMenuFi = (menuData) => {
     for (const meal of setMenu.Meals) {
     console.log(meal);
     coursesFi.push(meal.Name);
+    if (meal.Diets.includes('Veg')) {
+      vegeMealsFi.push(meal.Name);
+    }
     console.log('meal name', meal.Name);
     }
   }
 };
 
 parseFazerMenuFi(LunchmenuFazerFi);
+
 
 /**
  * Parses course arrays from Fazer En json file
@@ -48,6 +54,9 @@ const parseFazerMenuEn = (menuData) => {
       if (i < 13) {
         coursesEn.push(meal.Name);
       }
+      if (meal.Diets.includes('Veg')) {
+        vegeMealsEn.push(meal.Name);
+      }
       console.log('meal name', meal.Name);
       i++;
     }
@@ -56,6 +65,6 @@ const parseFazerMenuEn = (menuData) => {
 
 parseFazerMenuEn(LunchmenuFazerEn);
 
-const FazerData = {coursesEn, coursesFi};
+const FazerData = {coursesEn, coursesFi, vegeMealsEn, vegeMealsFi};
 
 export default FazerData;
