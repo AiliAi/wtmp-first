@@ -172,11 +172,13 @@ nav > ul {
 
 .restorants-list {
   display: flex;
+  flex: 1 25%;
   flex-wrap: wrap;
 }
 
 .restorant {
   display: flex;
+  flex: 1;
   width: 35em;
   height: 21em;
   border: 2px dashed var(--brown);
@@ -186,18 +188,21 @@ nav > ul {
   background-color: var(--gray);
 }
 
-.restorant-text {
+.flex-item {
   display: flex;
   flex-direction: column;
   padding: 1em;
 }
 
-.restorant-logo {
-  font-size: 0.625em;
+.flex-item > img {
   padding: 1em;
   padding-right: 0;
-  height: 15em;
+  width: 10em;
+  height: auto;
 }
+
+.flex-item:nth-of-type(1) { flex-grow: 1; }
+.flex-item:nth-of-type(2) { flex-grow: 4; }
 
 .location {
   position: relative;
