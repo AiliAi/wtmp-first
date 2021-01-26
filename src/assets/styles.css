@@ -25,7 +25,9 @@
 
 :root {
   /* Käytetyt värit */
-  --green: #43E04F;
+  --white: white;
+  --lighter: hsla(0, 0%, 100%, 0.589);
+  --green: #1CAB28;
   --brown: #940E3F;
   --dark-gray:#343A40;
   --light-gray: #9BADBF;
@@ -46,13 +48,17 @@ body {
   font-family: var(--lato);
 }
 
+.container-nav {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+  margin: 0.3em 3em;
+}
+
 nav {
   display: flex;
-  flex-direction: row;
-  margin: 0.3em 3em;
+  flex: 1;
   color: var(--brown);
-  flex-wrap: wrap;
-  justify-content: center;
 }
 
 ul {
@@ -75,6 +81,12 @@ nav > ul {
   font-size: 1.3em;
   font-family: var(--lato);
   font-weight: 700;
+}
+
+.menu > li:hover {
+  color: var(--pink);
+  background-color: var(--lighter);
+  border-radius: 5px;
 }
 
 .search {
@@ -129,12 +141,15 @@ nav > ul {
   align-items: center;
   flex-direction: column;
   font-family: var(--roboto);
-  font-size: 1.4375em;
 }
 
-.big-text {
-  font-size: 60px;
+.banner-left > p:first-child {
+  font-size: 3.75em;
   font-weight: 700;
+}
+
+.banner-left > p:nth-of-type(2){
+  font-size: 1.4375em;
 }
 
 .banner-right {
@@ -180,7 +195,7 @@ nav > ul {
   display: flex;
   flex: 1;
   width: 35em;
-  height: 21em;
+  min-height: 21em;
   border: 2px dashed var(--brown);
   margin: 2em;
   margin-top: 0;
@@ -205,34 +220,30 @@ nav > ul {
 .flex-item:nth-of-type(2) { flex-grow: 4; }
 
 .location {
+  display: flex;
   position: relative;
   margin-bottom: 1em;
+  justify-content: space-between;
 }
 
-.location > h2 {
-  display: inline;
+h2 {
   font-size: 1.4em;
   font-family: var(--lato);
   font-weight: 700;
 }
 
-.location > svg {
+.separate > svg {
   margin-left: 0em;
   position: absolute;
   top: 0.125em;
-  left: 7.5em;
+  right: 4em;
   width: 1.5em;
   fill: var(--black);
 }
 
-.location > svg:hover {
+.separate > svg:hover {
   fill: var(--light-green);
   width: 1.5em;
-}
-
-.distance {
-  position: absolute;
-  left: 6.5em;
 }
 
 .small-menu > button {
@@ -275,9 +286,27 @@ nav > ul {
 
 .btn-add-ravintola > svg:hover, .btn-add-ravintola > svg:active {
   width: 3em;
-  fill: pink;
+  fill: var(--pink);
 }
 
 .add-ravintola-text {
   font-size: 1.5em;
+}
+
+@media (max-width: 900px){
+  .banner-left > p:first-child {
+    font-size: 6vw;
+    font-weight: 700;
+  }
+
+  .banner-left > p:nth-of-type(2){
+    font-size: 3vw;
+  }
+
+}
+
+@media (max-width: 620px){
+  .banner-right > img{
+  height: 60vw;
+  }
 }
