@@ -163,3 +163,52 @@ const init = () => {
   //TODO: render fazer data on page (use fazer-data.js module)
 };
 init();
+
+
+//nav opening and closeing
+
+const navMenuIcon = document.querySelector(".hamburger");
+const menu = document.getElementById("menu");
+
+  const navMenu = () => {
+    if (menu.style.display === "block") {
+      menu.style.display = "none";
+      navMenuIcon.style.backgroundColor = "";
+    } else {
+      menu.style.display = "block";
+      navMenuIcon.style.backgroundColor = "#ffffff";
+    }
+  };
+
+  navMenuIcon.addEventListener("click", navMenu);
+
+  /*
+  navMenuIcon.addEventListener("mouseover", navMenu);
+  menu.addEventListener("mouseout", navMenu);
+  navMenuIcon.addEventListener("mouseout", () => {
+    if (menu.style.display === "block") {
+      menu.style.display = "none";
+    }
+  });*/
+
+  //Change "nav menu" -> "hamburger"
+if (matchMedia) {
+  const mediaQuery1 = window.matchMedia("(max-width: 910px)");
+  mediaQuery1.addListener(WidthChange);
+  WidthChange(mediaQuery1);
+}
+// media query change 1: change "Lisää kuva" -> "+"
+function WidthChange(mediaQuery1) {
+  if (mediaQuery1.matches) {
+    menu.style.display = "none";
+    navMenuIcon.style.display='inline';
+  } else {
+    menu.style.display = "block";
+    navMenuIcon.style.display='none';
+  }
+}
+
+
+
+
+

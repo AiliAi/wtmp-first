@@ -13,18 +13,26 @@
   <link rel="preload" as="font" href="/assets/Lato-Bold.ttf" type="font/ttf" crossorigin="anonymous">
   <link rel="preload" as="font" href="/assets/Lato-Regular.ttf" type="font/ttf" crossorigin="anonymous">
   <link rel="stylesheet" href="assets/styles.css">
+  <link rel="stylesheet" href="assets/navigation.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
-
 <body>
+    <!-- Top Navigation Menu -->
   <div class="container-nav">
-  <nav>
-    <ul class="menu" autofocus>
-      <li>Etusivu</li>
-      <li>Ruokalista</li>
-      <li>Ravintolat</li>
-      <li>Yhteystiedot</li>
-    </ul>
-  </nav>
+    <nav>
+      <div id="menu" autofocus>
+        <a class="links" href="#">Etusivu</a>
+        <a class="links" href="#">Ruokalista</a>
+        <a class="links" href="#">Ravintolat</a>
+        <a class="links" href="#">Yhteystiedot</a>
+      </div>
+      <div>
+      <a href="javascript:void(0);" class="hamburger">☰</a>
+    </div>
+    </nav>
+    <div class="break"></div>
     <section class="search" role="search">
       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px"
         viewBox="0 0 100 125" enable-background="new 0 0 100 100" xml:space="preserve">
@@ -126,7 +134,7 @@
       <section class="restorants-list">
 
         <article class="restorant">
-          <div class="flex-item">
+          <div class="flex-item image-center">
             <img src="assets/sodexo_logo.jpg" alt="sodexo logo">
           </div>
           <div class="flex-item">
@@ -153,7 +161,7 @@
         </article>
 
         <article class="restorant">
-          <div class="flex-item">
+          <div class="flex-item image-center">
             <img src="assets/fazer-logo.jpg" alt="fazer logo">
           </div>
           <div class="flex-item">
