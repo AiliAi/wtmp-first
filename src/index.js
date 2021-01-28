@@ -14,6 +14,7 @@ import SodexoData from './modules/sodexo-data.js';
 import FazerData from './modules/fazer-data.js';
 
 let languageSetting = "fi";
+console.log('index faze', FazerData.getDailyMenu(languageSetting));
 
 let language = document.querySelector(".language");
 language.innerHTML = "EN";
@@ -21,15 +22,16 @@ let random = document.querySelector(".random");
 random.innerHTML = "satunnainen";
 
 /**
- * Displays Sodexo lunch menu items as html list
+ * Displays lunch menu items as html list
  *
- * @param {Array} menu - Lunch menu array
+ * @param {Array} menuData - Lunch menu array
+ * @param {string} restaurant - element target id
  */
-const renderMenu = (menu) => {
-  const list = document.querySelector("#sodexo");
-  list.innerHTML = "";
-  for (const item of menu) {
-    const listItem = document.createElement("li");
+const renderMenu = (menuData, restaurant) => {
+  const list = document.querySelector('#' + restaurant);
+  list.innerHTML = '';
+  for (const item of menuData) {
+    const listItem = document.createElement('li');
     listItem.textContent = item;
     list.appendChild(listItem);
   }
@@ -59,7 +61,7 @@ const switchLanguage = () => {
     language.innerHTML = "FI";
     random.innerHTML = "pick a dish";
     languageSetting = "en";
-    renderMenu(SodexoData.coursesEn);
+    renderMenu(SodexoData.getDailiMenu(languageSetting));
     renderMenu2(FazerData.coursesEn);
   } else {
     language.innerHTML = "EN";
@@ -158,8 +160,8 @@ const init = () => {
   document
     .querySelector(".vegeMeals")
     .addEventListener("click", displayVegMenu);
-  renderMenu(SodexoData.coursesFi);
-  renderMenu2(FazerData.coursesFi);
+    renderMenu(SodexoData.getDailyMenu(languageSetting), 'sodexo');
+    renderMenu(FazerData.getDailyMenu(languageSetting), 'fazer');
   //TODO: render fazer data on page (use fazer-data.js module)
 };
 init();

@@ -17,6 +17,35 @@ let vegeMealsEn = [];
 let vegeMealsFi = [];
 
 /**
+ * Return a daily menu array from Fazer weekly json data
+ *
+ * @param {Object} menuData
+ * @param {Numero} dayOfWeek week day 0-6
+ * @returns {Array} daily menu
+ */
+const parseDailyMenu = (menuData, dayOfWeek) => {
+  let dailyMenu = menuData.LunchMenus[dayOfWeek].SetMenus.map(setMenu => {
+    let mealName = setMenu.Name;
+    let dishes = setMenu.Meals.map(dish => {
+      return `${dish.Name} (${dish.Diets.join(', ')})`;
+    });
+    return mealName ? mealName + dishes.join(', ') : dishes.join(', ') ;
+  });
+
+  return dailyMenu;
+};
+
+const getDailyMenu = (lang, dayOfWeek = 0) => {
+  return (lang === 'fi') ?
+  parseDailyMenu(LunchmenuFazerFi, dayOfWeek)
+   :
+  parseDailyMenu(LunchmenuFazerEn, dayOfWeek);
+};
+
+console.log('debug', getDailyMenu('en'));
+
+
+/**
  * Parses course arrays from Fazer Fi json file
  *
  * @param {Object} menuData
@@ -36,7 +65,7 @@ const parseFazerMenuFi = (menuData) => {
   }
 };
 
-parseFazerMenuFi(LunchmenuFazerFi);
+//parseFazerMenuFi(LunchmenuFazerFi);
 
 
 /**
@@ -63,8 +92,13 @@ const parseFazerMenuEn = (menuData) => {
   }
 };
 
-parseFazerMenuEn(LunchmenuFazerEn);
+//parseFazerMenuEn(LunchmenuFazerEn);
 
-const FazerData = {coursesEn, coursesFi, vegeMealsEn, vegeMealsFi};
+
+//const FazerData = {coursesEn, coursesFi, vegeMealsEn, vegeMealsFi};
+
+//export default FazerData;
+
+const FazerData = {getDailyMenu};
 
 export default FazerData;
