@@ -1,243 +1,80 @@
-/*import sayHello from "./moduls/test-moduls.js";
-console.log(sayHello('Aili'));*/
-
-/*import {sayHello} from "./moduls/test-moduls.js";
-import {setting} from "./moduls/test-moduls.js";
-console.log(sayHello('Aili'));
-console.log('application lang:', setting.lang);*/
-
-
-/*import myModule from './moduls/test-moduls.js';
-console.log('application lang:', myModule.setting.lang);
-console.log(myModule.sayHello('Aili'));*/
-import SodexoData from './modules/sodexo-data.js';
-import FazerData from './modules/fazer-data.js';
-
-let languageSetting = "fi";
-
-let language = document.querySelector(".language");
-language.innerHTML = "EN";
-let random = document.querySelector(".random");
-random.innerHTML = "satunnainen";
-
-/**
- * Displays Sodexo lunch menu items as html list
- *
- * @param {Array} menu - Lunch menu array
- */
-const renderMenu = (menu) => {
-  const list = document.querySelector("#sodexo");
-  list.innerHTML = "";
-  for (const item of menu) {
-    const listItem = document.createElement("li");
-    listItem.textContent = item;
-    list.appendChild(listItem);
-  }
-};
-
-/**
- * Displays Fazer lunch menu items as html list
- *
- * @param {Array} menu - Lunch menu array
- */
-const renderMenu2 = (menu) => {
-  const list = document.querySelector("#fazer");
-  list.innerHTML = "";
-  for (const item of menu) {
-    const listItem = document.createElement("li");
-    listItem.textContent = item;
-    list.appendChild(listItem);
-  }
-};
-
-
-/**
- * Switch app lang en/fi
- */
-const switchLanguage = () => {
-  if (languageSetting === "fi") {
-    language.innerHTML = "FI";
-    random.innerHTML = "pick a dish";
-    languageSetting = "en";
-    renderMenu(SodexoData.coursesEn);
-    renderMenu2(FazerData.coursesEn);
-  } else {
-    language.innerHTML = "EN";
-    random.innerHTML = "satunnainen";
-    languageSetting = "fi";
-    renderMenu(SodexoData.coursesFi);
-    renderMenu2(FazerData.coursesFi);
-  }
-  console.log("change language to: ", languageSetting);
-};
-
-/**
- * Sorts menu alphapetically
- *
- * @param {Array} menu
- * @param {string} order
- * @returns Sorted menu array
- */
-const sortMenu = (menu, order) => {
-  if (order == "desc") {
-    return menu.sort().reverse();
-  } else {
-    return menu.sort();
-  }
-};
-
-let ascEn = false;
-let ascFi = false;
-/**
- * Eventhandler for sort menu button
- */
-const renderSortedMenu = () => {
-  if (languageSetting === "en") {
-    if (ascEn == false) {
-      renderMenu(sortMenu(SodexoData.coursesEn, "asc"));
-      renderMenu2(sortMenu(FazerData.coursesEn, "asc"));
-      ascEn = true;
-    } else {
-      renderMenu(sortMenu(SodexoData.coursesEn, "desc"));
-      renderMenu2(sortMenu(FazerData.coursesEn, "desc"));
-      ascEn = false;
+//1. Create a "game cheat code" like secret code feature,
+//activated by typing secret password (record letter key presses in certain sequence).
+//When a user types e.g. "hello", launch a response alert or something like that.
+//(TIP: think about queue data structure)
+const createCheatCode = (secretWord) => {
+  const keyPresses = new Array(secretWord.length);
+  document.addEventListener('keypress', event => {
+    keyPresses.shift();
+    keyPresses.push(event.key);
+    console.log(keyPresses.join(''));
+    if (keyPresses.join('').toLowerCase() === secretWord.toLowerCase()) {
+      console.log('correct word', secretWord);
+      alert('correct word - ' + secretWord);
     }
-  } else {
-    if (ascFi == false) {
-      renderMenu(sortMenu(SodexoData.coursesFi, "asc"));
-      renderMenu2(sortMenu(FazerData.coursesFi, "asc"));
-      ascFi = true;
-    } else {
-      renderMenu(sortMenu(SodexoData.coursesFi, "desc"));
-      renderMenu2(sortMenu(FazerData.coursesFi, "desc"));
-      ascFi = false;
-    }
-  }
+  });
 };
 
-/**
- * Picks a random dish from Sodexo lunch menu array
- *
- * @param {Array} menu
- * @returns string dish name
- */
-const pickRandomDish = (menu) => {
-  const randomIndex = Math.floor(Math.random() * menu.length);
-  return menu[randomIndex];
+createCheatCode('hello');
+createCheatCode('moi');
+
+//2.Create a function that shows the x and y coordinates of mouse double-clicks on the page
+const displayMouseDoubleClickCoordinates = () => {
+  const output = document.querySelector('.output');
+  document.addEventListener('dblclick', event => {
+    output.textContent = `Double clicked at x: ${event.clientX}, y: ${event.clientY}`;
+    console.log('dbl click coords: ', event.clientX, event.clientY);
+  });
 };
 
-const displayRandomDish = () => {
-  if (languageSetting === "fi") {
-  alert(pickRandomDish(SodexoData.coursesFi));
-  } else {
-    alert(pickRandomDish(SodexoData.coursesEn));
-  }
+displayMouseDoubleClickCoordinates();
+
+//3.Create an element that reacts (e.g. console.log something) to touches but not clicks
+const testReactToTouch = () => {
+  const target = document.querySelector('.touch');
+  const output = document.querySelector('.output');
+  target.addEventListener('touchstart', event => {
+    console.log('target touched', event);
+    output.textContent = `Double clicked at x: ${event.targetTouches[0].clientX}, y: ${event.targetTouches[0].clientY}`;
+  });
 };
 
-/**
- * Picks all vegeterian dishes from Fazer lunch menu array
- */
-const displayVegMenu = () => {
-  if (languageSetting === "fi") {
-    alert(FazerData.vegeMealsFi);
-  } else {
-    alert(FazerData.vegeMealsEn);
-  }
+testReactToTouch();
+
+//4.Create a timer that tells user to "hurry up" after 15 secs of browsing
+//the notification should appear on the web page
+const createTimer = (timeInSeconds) => {
+  const output = document.querySelector('.output');
+  setTimeout(() => {
+    console.log('do something!');
+    output.textContent = 'do something!';
+  }, timeInSeconds * 1000);
 };
 
-const init = () => {
-  document
-    .querySelector("#switch-lang")
-    .addEventListener("click", switchLanguage);
-  document
-    .querySelector("#sort-menu")
-    .addEventListener("click", renderSortedMenu);
-  document
-    .querySelector("#pick-dish")
-    .addEventListener("click", displayRandomDish);
-  document
-    .querySelector(".vegeMeals")
-    .addEventListener("click", displayVegMenu);
-  renderMenu(SodexoData.coursesFi);
-  renderMenu2(FazerData.coursesFi);
-  //TODO: render fazer data on page (use fazer-data.js module)
-};
-init();
+//createTimer(5);
 
+//5.Create a timer that tells user to "hurry up" after 15 secs of idling
+//(= not doing anything: mouse hasn't been moving, keyboard keys haven't been pressed...)
+//the notification should appear on the web page
+const createInactivityTimer = (duration) => {
+  const output = document.querySelector('.output');
+  let timer;
 
-//nav opening and closing
-const navMenuIcon = document.querySelector(".hamburger");
-const menu = document.getElementById("menu");
+  const resetTimer = event => {
+    clearTimeout(timer);
 
-  const navMenu = () => {
-    if (menu.style.display === "block") {
-      menu.style.display = "none";
-      navMenuIcon.style.backgroundColor = "";
-    } else {
-      menu.style.display = "block";
-      navMenuIcon.style.backgroundColor = "#ffffff";
-    }
+    timer = setTimeout(() => {
+      output.textContent = 'do do something!';
+      console.log('DO DO something!');
+    }, duration * 1000);
   };
-
-  navMenuIcon.addEventListener("click", navMenu);
-
-  let banner = document.querySelector(".banner");
-  let intro = document.querySelector(".intro");
-
-
-let hideMenuWhenScrolling = () => {
-  menu.style.display = "none";
-  navMenuIcon.style.remove(a);
+  resetTimer();
+  document.addEventListener('mousemove', resetTimer);
+  document.addEventListener('touchstart', resetTimer);
+  document.addEventListener('keypress', resetTimer);
 };
 
-  //Change "nav menu" -> "hamburger"
-if (matchMedia) {
-  const mediaQuery1 = window.matchMedia("(max-width: 910px)");
-  mediaQuery1.addListener(WidthChange);
-  WidthChange(mediaQuery1);
-}
-// media query change 1: change "Lisää kuva" -> "+"
-function WidthChange(mediaQuery1) {
-  window.onscroll = () => {
-    hideMenuWhenScrolling();
-    };
-
-  if (mediaQuery1.matches) {
-    menu.style.display = "none";
-    navMenuIcon.style.display='inline';
-    intro.innerHTML = '';
-    banner.innerHTML = `
-    <section class="intro bc-color">
-    <p>
-      Missä tänään syötäisiin? Tuttu tarina ennen lounashetkeä.
-    </p>
-    <p>
-      Palvelu etsii lähelläsi olevat lounaspaikat, sekä näyttää niiden päivittäisen lounaslistan.
-      Viikottaiset lounaslistat ovat myös käytettävissäsi. Pääset niihin klikkaamalla ravintolan logoa.
-    </p>
-    </section>`;
-  } else {
-    menu.style.display = "block";
-    navMenuIcon.style.display='none';
-    banner.innerHTML = `
-    <div class="banner-left">
-    <p>LOUNARI.</p>
-    <p>Missä tänään syötäisiin?</p>
-    </div>
-    <div class="banner-right"><img src="assets/food.jpg" alt="" /></div>`;
-
-    intro.innerHTML = `
-    <p>
-      Missä tänään syötäisiin? Tuttu tarina ennen lounashetkeä.
-    </p>
-    <p>
-      Palvelu etsii lähelläsi olevat lounaspaikat, sekä näyttää niiden päivittäisen lounaslistan.
-      Viikottaiset lounaslistat ovat myös käytettävissäsi. Pääset niihin klikkaamalla ravintolan logoa.
-    </p>`;
-  }
-}
-
-
+createInactivityTimer(5);
 
 
 
