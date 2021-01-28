@@ -165,8 +165,7 @@ const init = () => {
 init();
 
 
-//nav opening and closeing
-
+//nav opening and closing
 const navMenuIcon = document.querySelector(".hamburger");
 const menu = document.getElementById("menu");
 
@@ -182,14 +181,14 @@ const menu = document.getElementById("menu");
 
   navMenuIcon.addEventListener("click", navMenu);
 
-  /*
-  navMenuIcon.addEventListener("mouseover", navMenu);
-  menu.addEventListener("mouseout", navMenu);
-  navMenuIcon.addEventListener("mouseout", () => {
-    if (menu.style.display === "block") {
-      menu.style.display = "none";
-    }
-  });*/
+  let banner = document.querySelector(".banner");
+  let intro = document.querySelector(".intro");
+
+
+let hideMenuWhenScrolling = () => {
+  menu.style.display = "none";
+  navMenuIcon.style.remove(a);
+};
 
   //Change "nav menu" -> "hamburger"
 if (matchMedia) {
@@ -199,12 +198,42 @@ if (matchMedia) {
 }
 // media query change 1: change "Lisää kuva" -> "+"
 function WidthChange(mediaQuery1) {
+  window.onscroll = () => {
+    hideMenuWhenScrolling();
+    };
+
   if (mediaQuery1.matches) {
     menu.style.display = "none";
     navMenuIcon.style.display='inline';
+    intro.innerHTML = '';
+    banner.innerHTML = `
+    <section class="intro bc-color">
+    <p>
+      Missä tänään syötäisiin? Tuttu tarina ennen lounashetkeä.
+    </p>
+    <p>
+      Palvelu etsii lähelläsi olevat lounaspaikat, sekä näyttää niiden päivittäisen lounaslistan.
+      Viikottaiset lounaslistat ovat myös käytettävissäsi. Pääset niihin klikkaamalla ravintolan logoa.
+    </p>
+    </section>`;
   } else {
     menu.style.display = "block";
     navMenuIcon.style.display='none';
+    banner.innerHTML = `
+    <div class="banner-left">
+    <p>LOUNARI.</p>
+    <p>Missä tänään syötäisiin?</p>
+    </div>
+    <div class="banner-right"><img src="assets/food.jpg" alt="" /></div>`;
+
+    intro.innerHTML = `
+    <p>
+      Missä tänään syötäisiin? Tuttu tarina ennen lounashetkeä.
+    </p>
+    <p>
+      Palvelu etsii lähelläsi olevat lounaspaikat, sekä näyttää niiden päivittäisen lounaslistan.
+      Viikottaiset lounaslistat ovat myös käytettävissäsi. Pääset niihin klikkaamalla ravintolan logoa.
+    </p>`;
   }
 }
 
