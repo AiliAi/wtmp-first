@@ -1,17 +1,15 @@
-/*import sayHello from "./moduls/test-moduls.js";
-console.log(sayHello('Aili'));*/
-
-/*import {sayHello} from "./moduls/test-moduls.js";
-import {setting} from "./moduls/test-moduls.js";
-console.log(sayHello('Aili'));
-console.log('application lang:', setting.lang);*/
-
-
-/*import myModule from './moduls/test-moduls.js';
-console.log('application lang:', myModule.setting.lang);
-console.log(myModule.sayHello('Aili'));*/
 import SodexoData from './modules/sodexo-data.js';
 import FazerData from './modules/fazer-data.js';
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js').then(registration => {
+      console.log('SW registered: ', registration);
+    }).catch(registrationError => {
+      console.log('SW registration failed: ', registrationError);
+    });
+  });
+}
 
 let languageSetting = "fi";
 console.log('index faze', FazerData.getDailyMenu(languageSetting));
