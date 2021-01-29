@@ -41,63 +41,8 @@ const getDailyMenu = (lang, dayOfWeek = 0) => {
    :
   parseDailyMenu(LunchmenuFazerEn, dayOfWeek);
 };
-
 console.log('debug', getDailyMenu('en'));
 
-
-/**
- * Parses course arrays from Fazer Fi json file
- *
- * @param {Object} menuData
- */
-const parseFazerMenuFi = (menuData) => {
-  console.log(menuData.LunchMenus[0].SetMenus);
-  for (const setMenu of menuData.LunchMenus[0].SetMenus) {
-    console.log(setMenu);
-    for (const meal of setMenu.Meals) {
-    console.log(meal);
-    coursesFi.push(meal.Name);
-    if (meal.Diets.includes('Veg')) {
-      vegeMealsFi.push(meal.Name);
-    }
-    console.log('meal name', meal.Name);
-    }
-  }
-};
-
-//parseFazerMenuFi(LunchmenuFazerFi);
-
-
-/**
- * Parses course arrays from Fazer En json file
- *
- * @param {Object} menuData
- */
-let i = 0;
-const parseFazerMenuEn = (menuData) => {
-  console.log(menuData.LunchMenus[0].SetMenus);
-  for (const setMenu of menuData.LunchMenus[0].SetMenus) {
-    console.log(setMenu);
-    for (const meal of setMenu.Meals) {
-      console.log(meal);
-      if (i < 13) {
-        coursesEn.push(meal.Name);
-      }
-      if (meal.Diets.includes('Veg')) {
-        vegeMealsEn.push(meal.Name);
-      }
-      console.log('meal name', meal.Name);
-      i++;
-    }
-  }
-};
-
-//parseFazerMenuEn(LunchmenuFazerEn);
-
-
-//const FazerData = {coursesEn, coursesFi, vegeMealsEn, vegeMealsFi};
-
-//export default FazerData;
 
 const FazerData = {getDailyMenu};
 

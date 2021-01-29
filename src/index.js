@@ -38,22 +38,6 @@ const renderMenu = (menuData, restaurant) => {
 };
 
 /**
- * Displays Fazer lunch menu items as html list
- *
- * @param {Array} menu - Lunch menu array
- */
-const renderMenu2 = (menu) => {
-  const list = document.querySelector("#fazer");
-  list.innerHTML = "";
-  for (const item of menu) {
-    const listItem = document.createElement("li");
-    listItem.textContent = item;
-    list.appendChild(listItem);
-  }
-};
-
-
-/**
  * Switch app lang en/fi
  */
 const switchLanguage = () => {
@@ -61,15 +45,13 @@ const switchLanguage = () => {
     language.innerHTML = "FI";
     random.innerHTML = "pick a dish";
     languageSetting = "en";
-    renderMenu(SodexoData.getDailiMenu(languageSetting));
-    renderMenu2(FazerData.coursesEn);
   } else {
     language.innerHTML = "EN";
     random.innerHTML = "satunnainen";
     languageSetting = "fi";
-    renderMenu(SodexoData.coursesFi);
-    renderMenu2(FazerData.coursesFi);
   }
+  renderMenu(SodexoData.getDailyMenu(languageSetting), 'sodexo');
+  renderMenu(FazerData.getDailyMenu(languageSetting), 'fazer');
   console.log("change language to: ", languageSetting);
 };
 
@@ -88,37 +70,22 @@ const sortMenu = (menu, order) => {
   }
 };
 
-let ascEn = false;
-let ascFi = false;
 /**
  * Eventhandler for sort menu button
  */
+let order = 'asc';
 const renderSortedMenu = () => {
-  if (languageSetting === "en") {
-    if (ascEn == false) {
-      renderMenu(sortMenu(SodexoData.coursesEn, "asc"));
-      renderMenu2(sortMenu(FazerData.coursesEn, "asc"));
-      ascEn = true;
-    } else {
-      renderMenu(sortMenu(SodexoData.coursesEn, "desc"));
-      renderMenu2(sortMenu(FazerData.coursesEn, "desc"));
-      ascEn = false;
-    }
+  renderMenu(sortMenu(SodexoData.getDailyMenu(languageSetting), order), 'sodexo');
+  renderMenu(sortMenu(FazerData.getDailyMenu(languageSetting), order), 'fazer');
+  if (order === 'asc'){
+    order = 'desc';
   } else {
-    if (ascFi == false) {
-      renderMenu(sortMenu(SodexoData.coursesFi, "asc"));
-      renderMenu2(sortMenu(FazerData.coursesFi, "asc"));
-      ascFi = true;
-    } else {
-      renderMenu(sortMenu(SodexoData.coursesFi, "desc"));
-      renderMenu2(sortMenu(FazerData.coursesFi, "desc"));
-      ascFi = false;
-    }
+    order = 'asc';
   }
 };
 
 /**
- * Picks a random dish from Sodexo lunch menu array
+ * Picks a random dish from lunch menu array
  *
  * @param {Array} menu
  * @returns string dish name
@@ -129,23 +96,9 @@ const pickRandomDish = (menu) => {
 };
 
 const displayRandomDish = () => {
-  if (languageSetting === "fi") {
-  alert(pickRandomDish(SodexoData.coursesFi));
-  } else {
-    alert(pickRandomDish(SodexoData.coursesEn));
-  }
+  alert(pickRandomDish(SodexoData.getDailyMenu(languageSetting)));
 };
 
-/**
- * Picks all vegeterian dishes from Fazer lunch menu array
- */
-const displayVegMenu = () => {
-  if (languageSetting === "fi") {
-    alert(FazerData.vegeMealsFi);
-  } else {
-    alert(FazerData.vegeMealsEn);
-  }
-};
 
 const init = () => {
   document
@@ -157,14 +110,26 @@ const init = () => {
   document
     .querySelector("#pick-dish")
     .addEventListener("click", displayRandomDish);
-  document
-    .querySelector(".vegeMeals")
-    .addEventListener("click", displayVegMenu);
     renderMenu(SodexoData.getDailyMenu(languageSetting), 'sodexo');
     renderMenu(FazerData.getDailyMenu(languageSetting), 'fazer');
   //TODO: render fazer data on page (use fazer-data.js module)
 };
 init();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //nav opening and closing
@@ -187,9 +152,10 @@ const menu = document.getElementById("menu");
   let intro = document.querySelector(".intro");
 
 
-let hideMenuWhenScrolling = () => {
-  menu.style.display = "none";
-  navMenuIcon.style.remove(a);
+const hideMenuWhenScrolling = () => {
+  window.onscroll = () => {
+    menu.style.display = "none";
+    };
 };
 
   //Change "nav menu" -> "hamburger"
@@ -200,11 +166,9 @@ if (matchMedia) {
 }
 // media query change 1: change "Lisää kuva" -> "+"
 function WidthChange(mediaQuery1) {
-  window.onscroll = () => {
-    hideMenuWhenScrolling();
-    };
 
   if (mediaQuery1.matches) {
+    hideMenuWhenScrolling();
     menu.style.display = "none";
     navMenuIcon.style.display='inline';
     intro.innerHTML = '';
