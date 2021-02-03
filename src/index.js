@@ -137,10 +137,10 @@ const menu = document.getElementById("menu");
   const navMenu = () => {
     if (menu.style.display === "block") {
       menu.style.display = "none";
-      navMenuIcon.style.backgroundColor = "";
+      //navMenuIcon.style.backgroundColor = "";
     } else {
       menu.style.display = "block";
-      navMenuIcon.style.backgroundColor = "#ffffff";
+      //navMenuIcon.style.backgroundColor = "#87C789";
     }
   };
 
@@ -188,15 +188,17 @@ function WidthChange2(mediaQuery2) {
     intro.innerHTML = '';
     banner.innerHTML = `
     <section class="intro bc-color">
+    <h1>LOUNARI.
+    </h1>
     <p>
-      Missä tänään syötäisiin? Tuttu tarina ennen lounashetkeä.
+       Missä tänään syötäisiin? Tuttu tarina ennen lounashetkeä.
     </p>
     <p>
       Palvelu etsii lähelläsi olevat lounaspaikat, sekä näyttää niiden päivittäisen lounaslistan.
     </p>
     </section>`;
   } else {
-    navMenuIcon.style.display='none';
+    navMenuIcon.style.display='block';
     banner.innerHTML = `
     <div class="banner-left">
     <p>LOUNARI.</p>
@@ -209,7 +211,8 @@ function WidthChange2(mediaQuery2) {
       Missä tänään syötäisiin? Tuttu tarina ennen lounashetkeä.
     </p>
     <p>
-      Palvelu etsii lähelläsi olevat lounaspaikat, sekä näyttää niiden päivittäisen lounaslistan.
+    Palvelu etsii lähelläsi olevat lounaspaikat, sekä näyttää niiden päivittäisen lounaslistan.
+    Viikottaiset lounaslistat ovat myös käytettävissäsi. Pääset niihin klikkaamalla ravintolan logoa.
     </p>`;
   }
 }

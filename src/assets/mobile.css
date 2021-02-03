@@ -4,12 +4,54 @@
     font-size: 3vw;
   }
 
+  .container-nav {
+    background-color: var(--green-nav);
+  }
+
   .banner {
     height: 35vh;
     background-image: url("food-smaller.jpg");
     background-size: fill;
     position: relative;
     background-repeat: no-repeat;
+  }
+
+  .small-menu {
+    margin-top: -4em;
+  }
+
+  h1 {
+    color: var(--green);
+  }
+
+  #menu {
+    background-color: var(--green-nav);
+  }
+
+  nav {
+    background-color: var(--green-nav);
+  }
+
+  nav a {
+    background-color: var(--green-nav);
+  }
+
+  nav a:hover {
+    background-color: var(--green-nav);
+    color: var(--pink);
+  }
+
+  nav a:active {
+    background-color: var(--green-nav);
+    color: var(--pink);
+  }
+
+  .hamburger {
+    background-color: var(--green-nav);
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
   }
 }
 
