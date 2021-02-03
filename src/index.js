@@ -150,23 +150,39 @@ const menu = document.getElementById("menu");
   let intro = document.querySelector(".intro");
 
 
-const hideMenuWhenScrolling = () => {
-  window.onscroll = () => {
+
+window.addEventListener("scroll", () => {
+  if (window.innerWidth <= 910) {
     menu.style.display = "none";
-    };
-};
+  }
+});
 
   //Change "nav menu" -> "hamburger"
 if (matchMedia) {
   const mediaQuery1 = window.matchMedia("(max-width: 910px)");
   mediaQuery1.addListener(WidthChange);
   WidthChange(mediaQuery1);
+      const mediaQuery2 = window.matchMedia("(max-width: 730px)");
+      mediaQuery2.addListener(WidthChange2);
+      WidthChange2(mediaQuery2);
 }
+
+
 // media query change 1: change "Lisää kuva" -> "+"
 function WidthChange(mediaQuery1) {
 
   if (mediaQuery1.matches) {
-    hideMenuWhenScrolling();
+    menu.style.display = "none";
+    navMenuIcon.style.display='inline';
+  } else {
+    menu.style.display = "block";
+    navMenuIcon.style.display='none';
+  }
+}
+
+function WidthChange2(mediaQuery2) {
+
+  if (mediaQuery2.matches) {
     menu.style.display = "none";
     navMenuIcon.style.display='inline';
     intro.innerHTML = '';
@@ -177,11 +193,9 @@ function WidthChange(mediaQuery1) {
     </p>
     <p>
       Palvelu etsii lähelläsi olevat lounaspaikat, sekä näyttää niiden päivittäisen lounaslistan.
-      Viikottaiset lounaslistat ovat myös käytettävissäsi. Pääset niihin klikkaamalla ravintolan logoa.
     </p>
     </section>`;
   } else {
-    menu.style.display = "block";
     navMenuIcon.style.display='none';
     banner.innerHTML = `
     <div class="banner-left">
@@ -196,7 +210,6 @@ function WidthChange(mediaQuery1) {
     </p>
     <p>
       Palvelu etsii lähelläsi olevat lounaspaikat, sekä näyttää niiden päivittäisen lounaslistan.
-      Viikottaiset lounaslistat ovat myös käytettävissäsi. Pääset niihin klikkaamalla ravintolan logoa.
     </p>`;
   }
 }

@@ -1,0 +1,80 @@
+@media (max-width: 730px){
+  .bc-color {
+    padding: 20vh 5vh;
+    font-size: 3vw;
+  }
+
+  .banner {
+    height: 35vh;
+    background-image: url("food-smaller.jpg");
+    background-size: fill;
+    position: relative;
+    background-repeat: no-repeat;
+  }
+}
+
+@media (max-width: 620px){
+  .bc-color {
+    padding: 20vh 5vh;
+    font-size: 3.5vw;
+  }
+
+  .banner-right > img{
+  height: 60vw;
+  }
+
+  .restorants-list {
+    flex-direction: column;
+  }
+
+  .restorant {
+    flex-wrap: wrap;
+    margin-left: 0;
+    margin-right: 0;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+  }
+
+  .image-center {
+    align-items: center;
+    margin-right: 1em;
+  }
+
+  .flex-item {
+    padding: 2em;
+  }
+
+  .banner {
+    height: 35vh;
+    background-image: url("food-small.jpg");
+    background-size: fill;
+    position: relative;
+    background-repeat: no-repeat;
+  }
+
+}
+
+@media (max-width: 400px){
+  .bc-color {
+    padding: 20vh 5vh;
+    font-size: 4vw;
+  }
+
+  .btn-add-ravintola {
+    border: none;
+    cursor: pointer;
+    margin-left: 3em;
+    margin-bottom: 3em;
+    margin-right: 1em;
+    background-color: transparent;
+  }
+
+  .banner {
+    height: 35vh;
+    background-image: url("food-small.jpg");
+    background-size: fill;
+    position: relative;
+    background-repeat: no-repeat;
+  }
+}
