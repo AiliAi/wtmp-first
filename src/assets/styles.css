@@ -55,7 +55,7 @@ body {
   margin: 0em 3em;
 }
 
-nav {
+.nav-links {
   margin-top: 1.2em;
   display: flex;
   flex: 1;
@@ -350,14 +350,14 @@ h2 {
   display: block;
 }
 
-  nav {
+.nav-links  {
     margin-top: 0;
     z-index: 1;
     overflow: hidden;
     position: relative;
   }
 
-  nav > a {
+  .nav-links  > a {
     color: var(--brown);
     padding: 14px 16px;
     text-decoration: none;
@@ -380,7 +380,7 @@ h2 {
     background-color: var(--green-nav);
   }
 
-  nav > a:hover {
+  .nav-links  > a:hover {
     background-color: var(--green-nav);
     color: var(--pink);
   }

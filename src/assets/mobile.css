@@ -23,20 +23,20 @@
     background-color: var(--green-nav);
   }
 
-  nav {
+  .nav-links  {
     background-color: var(--green-nav);
   }
 
-  nav > a {
+  .nav-links  > a {
     background-color: var(--green-nav);
   }
 
-  nav > a:hover {
+  .nav-links  > a:hover {
     background-color: var(--green-nav);
     color: var(--pink);
   }
 
-  nav > a:active {
+  .nav-links  > a:active {
     background-color: var(--green-nav);
     color: var(--pink);
   }
