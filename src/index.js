@@ -134,7 +134,6 @@ init();
 const navMenuIcon = document.querySelector(".hamburger");
 const menu = document.getElementById("menu");
 const navContainer = document.querySelector(".container-nav");
-navMenuIcon.textContent= "☰";
 
   const navMenu = () => {
     if (menu.style.display === "block") {
@@ -164,9 +163,11 @@ window.addEventListener("scroll", () => {
   if (window.innerWidth <= 730) {
     menu.style.display = "none";
     navContainer.style.backgroundColor = "#77D786";
-  } else {
+  } else if (window.innerWidth <= 910){
     menu.style.display = "none";
     navContainer.style.backgroundColor = "#9BADBF";
+  } else {
+    menu.style.display = "block";
   }
 });
 
@@ -175,17 +176,17 @@ if (matchMedia) {
   const mediaQuery1 = window.matchMedia("(max-width: 910px)");
   mediaQuery1.addListener(WidthChange);
   WidthChange(mediaQuery1);
-      const mediaQuery2 = window.matchMedia("(max-width: 730px)");
-      mediaQuery2.addListener(WidthChange2);
-      WidthChange2(mediaQuery2);
+  const mediaQuery2 = window.matchMedia("(max-width: 730px)");
+  mediaQuery2.addListener(WidthChange2);
+  WidthChange2(mediaQuery2);
 }
 
 
 function WidthChange(mediaQuery1) {
-
   if (mediaQuery1.matches) {
     menu.style.display = "none";
     navMenuIcon.style.display='inline';
+    navMenuIcon.style.color= "#940E3F";
   } else {
     menu.style.display = "block";
     navMenuIcon.style.display='none';
@@ -193,7 +194,6 @@ function WidthChange(mediaQuery1) {
 }
 
 function WidthChange2(mediaQuery2) {
-
   if (mediaQuery2.matches) {
     menu.style.display = "none";
     navMenuIcon.style.display='inline';

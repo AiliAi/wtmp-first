@@ -64,6 +64,7 @@ nav {
 
 .hamburger {
   display: hide;
+  color: transparent;
   font-size: 1.3em;
   cursor: pointer;
 }
@@ -91,6 +92,10 @@ ul {
   color: var(--pink);
   background-color: var(--lighter);
   border-radius: 5px;
+}
+
+a {
+  color: var(--brown);
 }
 
 a:visited {
@@ -271,6 +276,11 @@ h2 {
   border: 2px solid var(--dark-gray);
   cursor: pointer;
   margin: 10px;
+}
+
+.small-menu > button:hover {
+  background-color: #696e72;
+  border: 2px solid #696e72;
 }
 
 .language, #sort-menu {
