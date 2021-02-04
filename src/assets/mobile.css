@@ -7,7 +7,6 @@
   .banner {
     height: 35vh;
     background-image: url("food-smaller.jpg");
-    background-size: fill;
     position: relative;
     background-repeat: no-repeat;
   }

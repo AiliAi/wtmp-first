@@ -63,7 +63,7 @@ nav {
 }
 
 .hamburger {
-  display: hide;
+  display: none;
   color: transparent;
   font-size: 1.3em;
   cursor: pointer;
