@@ -4,10 +4,6 @@
     font-size: 3vw;
   }
 
-  .container-nav {
-    background-color: var(--green-nav);
-  }
-
   .banner {
     height: 35vh;
     background-image: url("food-smaller.jpg");
