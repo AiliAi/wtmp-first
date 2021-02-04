@@ -65,6 +65,7 @@ nav {
 .hamburger {
   display: hide;
   font-size: 1.3em;
+  cursor: pointer;
 }
 
 ul {
@@ -120,7 +121,7 @@ a:visited {
 .search svg {
   position: absolute;
   top: 1.4em;
-  right: 14em;
+  right: 12em;
   max-width: 1.3em;
   fill: var(--brown);
 }
@@ -329,10 +330,14 @@ h2 {
   min-height: 35vh;
   top: 4em;
   background: var(--green-nav);
-  display: inline-block;
+  display: flex;
   text-align: center;
   transition: top .4s;
   border-bottom: 2px solid var(--brown);
+}
+
+#menu > a {
+  display: block;
 }
 
   nav {
@@ -342,7 +347,7 @@ h2 {
     position: relative;
   }
 
-  nav a {
+  nav > a {
     color: var(--brown);
     padding: 14px 16px;
     text-decoration: none;
@@ -353,11 +358,19 @@ h2 {
   .hamburger {
     display: block;
     position: absolute;
-    left: 0;
-    top: 0;
+    left: 1em;
+    top: 0.7em;
   }
 
-  nav a:hover {
+  .for-hover:hover  {
+    width: 4em;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: var(--green-nav);
+  }
+
+  nav > a:hover {
     background-color: var(--green-nav);
     color: var(--pink);
   }

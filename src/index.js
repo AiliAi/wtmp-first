@@ -134,6 +134,7 @@ init();
 const navMenuIcon = document.querySelector(".hamburger");
 const menu = document.getElementById("menu");
 const navContainer = document.querySelector(".container-nav");
+navMenuIcon.textContent= "☰";
 
   const navMenu = () => {
     if (menu.style.display === "block") {
