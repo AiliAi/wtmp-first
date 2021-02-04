@@ -133,14 +133,23 @@ init();
 //nav opening and closing
 const navMenuIcon = document.querySelector(".hamburger");
 const menu = document.getElementById("menu");
+const navContainer = document.querySelector(".container-nav");
 
   const navMenu = () => {
     if (menu.style.display === "block") {
+      if (window.innerWidth <= 730) {
       menu.style.display = "none";
-      //navMenuIcon.style.backgroundColor = "";
+      } else if (window.innerWidth <= 910) {
+      menu.style.display = "none";
+      navContainer.style.backgroundColor = "#9BADBF";
+      }
     } else {
-      menu.style.display = "block";
-      //navMenuIcon.style.backgroundColor = "#87C789";
+      if (window.innerWidth <= 730) {
+        menu.style.display = "block";
+        navContainer.style.backgroundColor = "#77D786";
+      } else if (window.innerWidth <= 910) { }
+        menu.style.display = "block";
+        navContainer.style.backgroundColor = "#9BADBF";
     }
   };
 
@@ -152,8 +161,11 @@ const menu = document.getElementById("menu");
 
 
 window.addEventListener("scroll", () => {
-  if (window.innerWidth <= 910) {
+  if (window.innerWidth <= 730) {
     menu.style.display = "none";
+  } else if (window.innerWidth <= 910) {
+    menu.style.display = "none";
+    navContainer.style.backgroundColor = "#9BADBF";
   }
 });
 
@@ -168,15 +180,16 @@ if (matchMedia) {
 }
 
 
-// media query change 1: change "Lisää kuva" -> "+"
 function WidthChange(mediaQuery1) {
 
   if (mediaQuery1.matches) {
     menu.style.display = "none";
     navMenuIcon.style.display='inline';
+    navContainer.style.backgroundColor = "#77D786";
   } else {
     menu.style.display = "block";
     navMenuIcon.style.display='none';
+    navContainer.style.backgroundColor = "#9BADBF";
   }
 }
 
@@ -185,6 +198,7 @@ function WidthChange2(mediaQuery2) {
   if (mediaQuery2.matches) {
     menu.style.display = "none";
     navMenuIcon.style.display='inline';
+    navContainer.style.backgroundColor = "#77D786";
     intro.innerHTML = '';
     banner.innerHTML = `
     <section class="intro bc-color">
@@ -199,6 +213,7 @@ function WidthChange2(mediaQuery2) {
     </section>`;
   } else {
     navMenuIcon.style.display='block';
+    navContainer.style.backgroundColor = "#9BADBF";
     banner.innerHTML = `
     <div class="banner-left">
     <p>LOUNARI.</p>

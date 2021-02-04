@@ -29,7 +29,7 @@
   --lighter: hsla(0, 0%, 100%, 0.589);
   --less-lighter: hsla(0, 0%, 100%, 0.904);
   --green: #1CAB28;
-  --green-nav: #87C789;
+  --green-nav: #77D786;
   --brown: #940E3F;
   --dark-gray:#343A40;
   --light-gray: #9BADBF;
@@ -255,15 +255,19 @@ h2 {
   width: 1.5em;
 }
 
+.small-menu {
+  margin-bottom: 1.8em;
+}
+
 .small-menu > button {
   height: 3em;
-  background-color: #ffffff;
+  background-color: var(--dark-gray);
   border-radius: 5px;
   font-weight: 400;
-  color: var(--brown);
+  color: var(--white);
   font-size: 0.7em;
   padding: 5px;
-  border: 2px solid var(--brown);
+  border: 2px solid var(--dark-gray);
   cursor: pointer;
   margin: 10px;
 }
@@ -324,10 +328,11 @@ h2 {
   width: 100%;
   min-height: 35vh;
   top: 4em;
-  background: var(--white);
+  background: var(--green-nav);
   display: inline-block;
   text-align: center;
   transition: top .4s;
+  border-bottom: 2px solid var(--brown);
 }
 
   nav {
@@ -353,7 +358,7 @@ h2 {
   }
 
   nav a:hover {
-    background-color: var(--white);
+    background-color: var(--green-nav);
     color: var(--pink);
   }
 
