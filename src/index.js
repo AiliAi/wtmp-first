@@ -280,7 +280,7 @@ function WidthChange2(mediaQuery2) {
     <p>LOUNARI.</p>
     <p>Missä tänään syötäisiin?</p>
     </div>
-    <div class="banner-right"><img src="assets/food.jpg" alt="" /></div>`;
+    <div class="banner-right"><img src="assets/food-smaller.jpg" alt="" /></div>`;
 
     intro.innerHTML = `
     <p>
