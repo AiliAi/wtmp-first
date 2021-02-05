@@ -39,15 +39,18 @@ const renderMenu = (menuData, restaurant) => {
 /**
  * Switch app lang en/fi
  */
+let fazerLang = FazerData.weeklyUrlFi;
 const switchLanguage = async () => {
   if (languageSetting === "fi") {
     language.innerHTML = "FI";
     random.innerHTML = "pick a dish";
     languageSetting = "en";
+    fazerLang = FazerData.weeklyUrlFi;
   } else {
     language.innerHTML = "EN";
     random.innerHTML = "satunnainen";
     languageSetting = "fi";
+    fazerLang = FazerData.weeklyUrlEn;
   }
 
   try {
@@ -61,7 +64,7 @@ const switchLanguage = async () => {
 
   try {
     // TODO: add multilang support
-    const weeklyMenuJson = await fetchGetJson(FazerData.weeklyUrlFi, true);
+    let weeklyMenuJson = await fetchGetJson(fazerLang, true);
     // Get number of the weekday (0: Sun, 1: Mon, etc.)
     const weekDay = new Date().getDay();
     const parsedMenu = FazerData.getDailyMenu(weeklyMenuJson, languageSetting, weekDay);
@@ -104,7 +107,7 @@ const renderSortedMenu = async () => {
 
   try {
     // TODO: add multilang support
-    const weeklyMenuJson = await fetchGetJson(FazerData.weeklyUrlFi, true);
+    const weeklyMenuJson = await fetchGetJson(fazerLang, true);
     // Get number of the weekday (0: Sun, 1: Mon, etc.)
     const weekDay = new Date().getDay();
     const parsedMenu = FazerData.getDailyMenu(weeklyMenuJson, languageSetting, weekDay);
