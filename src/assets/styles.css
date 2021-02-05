@@ -55,7 +55,7 @@ body {
   margin: 0em 3em;
 }
 
-nav {
+.nav-links {
   margin-top: 1.2em;
   display: flex;
   flex: 1;
@@ -63,8 +63,10 @@ nav {
 }
 
 .hamburger {
-  display: hide;
+  display: none;
+  color: transparent;
   font-size: 1.3em;
+  cursor: pointer;
 }
 
 ul {
@@ -90,6 +92,10 @@ ul {
   color: var(--pink);
   background-color: var(--lighter);
   border-radius: 5px;
+}
+
+a {
+  color: var(--brown);
 }
 
 a:visited {
@@ -120,7 +126,7 @@ a:visited {
 .search svg {
   position: absolute;
   top: 1.4em;
-  right: 14em;
+  right: 12em;
   max-width: 1.3em;
   fill: var(--brown);
 }
@@ -272,6 +278,11 @@ h2 {
   margin: 10px;
 }
 
+.small-menu > button:hover {
+  background-color: #696e72;
+  border: 2px solid #696e72;
+}
+
 .language, #sort-menu {
   width: 3em;
 }
@@ -329,20 +340,24 @@ h2 {
   min-height: 35vh;
   top: 4em;
   background: var(--green-nav);
-  display: inline-block;
+  display: flex;
   text-align: center;
   transition: top .4s;
   border-bottom: 2px solid var(--brown);
 }
 
-  nav {
+#menu > a {
+  display: block;
+}
+
+.nav-links  {
     margin-top: 0;
     z-index: 1;
     overflow: hidden;
     position: relative;
   }
 
-  nav a {
+  .nav-links  > a {
     color: var(--brown);
     padding: 14px 16px;
     text-decoration: none;
@@ -353,11 +368,19 @@ h2 {
   .hamburger {
     display: block;
     position: absolute;
-    left: 0;
-    top: 0;
+    left: 1em;
+    top: 0.7em;
   }
 
-  nav a:hover {
+  .for-hover:hover  {
+    width: 4em;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: var(--green-nav);
+  }
+
+  .nav-links  > a:hover {
     background-color: var(--green-nav);
     color: var(--pink);
   }
@@ -372,8 +395,3 @@ h2 {
   }
 
 }
-
-
-
-
-

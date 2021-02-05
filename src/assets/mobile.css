@@ -4,14 +4,9 @@
     font-size: 3vw;
   }
 
-  .container-nav {
-    background-color: var(--green-nav);
-  }
-
   .banner {
     height: 35vh;
     background-image: url("food-smaller.jpg");
-    background-size: fill;
     position: relative;
     background-repeat: no-repeat;
   }
@@ -28,30 +23,26 @@
     background-color: var(--green-nav);
   }
 
-  nav {
+  .nav-links  {
     background-color: var(--green-nav);
   }
 
-  nav a {
+  .nav-links  > a {
     background-color: var(--green-nav);
   }
 
-  nav a:hover {
+  .nav-links  > a:hover {
     background-color: var(--green-nav);
     color: var(--pink);
   }
 
-  nav a:active {
+  .nav-links  > a:active {
     background-color: var(--green-nav);
     color: var(--pink);
   }
 
   .hamburger {
     background-color: var(--green-nav);
-    display: block;
-    position: absolute;
-    left: 0;
-    top: 0;
   }
 }
 
@@ -90,7 +81,6 @@
   .banner {
     height: 35vh;
     background-image: url("food-small.jpg");
-    background-size: fill;
     position: relative;
     background-repeat: no-repeat;
   }
@@ -115,7 +105,6 @@
   .banner {
     height: 35vh;
     background-image: url("food-small.jpg");
-    background-size: fill;
     position: relative;
     background-repeat: no-repeat;
   }

@@ -52,8 +52,8 @@ const switchLanguage = () => {
     random.innerHTML = "satunnainen";
     languageSetting = "fi";
   }
-  renderMenu(SodexoData.getDailyMenu(languageSetting), "sodexo");
-  renderMenu(FazerData.getDailyMenu(languageSetting), "fazer");
+  renderMenu(SodexoData.getDailyMenu(dailyMenuJson, languageSetting), "sodexo");
+  renderMenu(FazerData.getDailyMenu(weeklyMenuJson, languageSetting, weekDay), "fazer");
   console.log("change language to: ", languageSetting);
 };
 
@@ -78,10 +78,10 @@ const sortMenu = (menu, order) => {
 let order = "asc";
 const renderSortedMenu = () => {
   renderMenu(
-    sortMenu(SodexoData.getDailyMenu(languageSetting), order),
+    sortMenu(SodexoData.getDailyMenu(dailyMenuJson, languageSetting), order),
     "sodexo"
   );
-  renderMenu(sortMenu(FazerData.getDailyMenu(languageSetting), order), "fazer");
+  renderMenu(sortMenu(FazerData.getDailyMenu(weeklyMenuJson, languageSetting, weekDay), order), "fazer");
   if (order === "asc") {
     order = "desc";
   } else {
@@ -101,7 +101,7 @@ const pickRandomDish = (menu) => {
 };
 
 const displayRandomDish = () => {
-  alert(pickRandomDish(SodexoData.getDailyMenu(languageSetting)));
+  alert(pickRandomDish(SodexoData.getDailyMenu(dailyMenuJson, languageSetting)));
 };
 
 const init = async () => {
@@ -115,23 +115,30 @@ const init = async () => {
     .querySelector("#pick-dish")
     .addEventListener("click", displayRandomDish);
 
-  try {
-    const dailyMenuJson = await fetchGetJson(sodexoData.dailyUrl);
-    const parseMenu = SodexoData.getDailyMenu(
-      dailyMenuJson,
-      languageSetting,
-      "sodexo"
-    );
-    renderMenu(parseMenu);
-  } catch (error) {
-    console.error(error);
-    //TODO: notify user?
-  }
+    try {
+      const dailyMenuJson = await fetchGetJson(SodexoData.dailyUrl);
+      const parsedMenu = SodexoData.getDailyMenu(dailyMenuJson, languageSetting);
+      renderMenu(parsedMenu, 'sodexo');
+    } catch (error) {
+      console.error(error);
+      // TODO: notify user ?
+    }
 
-  renderMenu(FazerData.getDailyMenu(languageSetting), "fazer");
-  //TODO: render fazer data on page (use fazer-data.js module)
-};
-init();
+    try {
+      // TODO: add multilang support
+      const weeklyMenuJson = await fetchGetJson(FazerData.weeklyUrlFi, true);
+      // Get number of the weekday (0: Sun, 1: Mon, etc.)
+      const weekDay = new Date().getDay();
+      const parsedMenu = FazerData.getDailyMenu(weeklyMenuJson, languageSetting, weekDay);
+      renderMenu(parsedMenu, 'fazer');
+      console.log(weeklyMenuJson);
+    } catch (error) {
+      console.error(error);
+      // TODO: notify user ?
+    }
+
+  };
+  init();
 
 
 
@@ -142,40 +149,43 @@ const navMenuIcon = document.querySelector(".hamburger");
 const menu = document.getElementById("menu");
 const navContainer = document.querySelector(".container-nav");
 
-const navMenu = () => {
-  if (menu.style.display === "block") {
-    if (window.innerWidth <= 730) {
+  const navMenu = () => {
+    if (menu.style.display === "block") {
+      if (window.innerWidth <= 730) {
       menu.style.display = "none";
-    } else if (window.innerWidth <= 910) {
+      navContainer.style.backgroundColor = "#77D786";
+      } else {
       menu.style.display = "none";
       navContainer.style.backgroundColor = "#9BADBF";
+      }
+    } else {
+        menu.style.display = "block";
+        if (window.innerWidth <= 910) {
+          navContainer.style.backgroundColor = "#77D786";
+        }
     }
-  } else {
-    if (window.innerWidth <= 730) {
-      menu.style.display = "block";
-      navContainer.style.backgroundColor = "#77D786";
-    } else if (window.innerWidth <= 910) {
-    }
-    menu.style.display = "block";
-    navContainer.style.backgroundColor = "#9BADBF";
-  }
-};
+  };
 
-navMenuIcon.addEventListener("click", navMenu);
+  navMenuIcon.addEventListener("click", navMenu);
 
-let banner = document.querySelector(".banner");
-let intro = document.querySelector(".intro");
+  let banner = document.querySelector(".banner");
+  let intro = document.querySelector(".intro");
+
+
 
 window.addEventListener("scroll", () => {
   if (window.innerWidth <= 730) {
     menu.style.display = "none";
-  } else if (window.innerWidth <= 910) {
+    navContainer.style.backgroundColor = "#77D786";
+  } else if (window.innerWidth <= 910){
     menu.style.display = "none";
     navContainer.style.backgroundColor = "#9BADBF";
+  } else {
+    menu.style.display = "block";
   }
 });
 
-//Change "nav menu" -> "hamburger"
+  //Change "nav menu" -> "hamburger"
 if (matchMedia) {
   const mediaQuery1 = window.matchMedia("(max-width: 910px)");
   mediaQuery1.addListener(WidthChange);
@@ -185,24 +195,24 @@ if (matchMedia) {
   WidthChange2(mediaQuery2);
 }
 
+
 function WidthChange(mediaQuery1) {
   if (mediaQuery1.matches) {
     menu.style.display = "none";
-    navMenuIcon.style.display = "inline";
-    navContainer.style.backgroundColor = "#77D786";
+    navMenuIcon.style.display='inline';
+    navMenuIcon.style.color= "#940E3F";
   } else {
     menu.style.display = "block";
-    navMenuIcon.style.display = "none";
-    navContainer.style.backgroundColor = "#9BADBF";
+    navMenuIcon.style.display='none';
   }
 }
 
 function WidthChange2(mediaQuery2) {
   if (mediaQuery2.matches) {
     menu.style.display = "none";
-    navMenuIcon.style.display = "inline";
+    navMenuIcon.style.display='inline';
     navContainer.style.backgroundColor = "#77D786";
-    intro.innerHTML = "";
+    intro.innerHTML = '';
     banner.innerHTML = `
     <section class="intro bc-color">
     <h1>LOUNARI.
@@ -215,7 +225,7 @@ function WidthChange2(mediaQuery2) {
     </p>
     </section>`;
   } else {
-    navMenuIcon.style.display = "block";
+    navMenuIcon.style.display='block';
     navContainer.style.backgroundColor = "#9BADBF";
     banner.innerHTML = `
     <div class="banner-left">
