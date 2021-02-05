@@ -45,12 +45,12 @@ const switchLanguage = async () => {
     language.innerHTML = "FI";
     random.innerHTML = "pick a dish";
     languageSetting = "en";
-    fazerLang = FazerData.weeklyUrlFi;
+    fazerLang = FazerData.weeklyUrlEn;
   } else {
     language.innerHTML = "EN";
     random.innerHTML = "satunnainen";
     languageSetting = "fi";
-    fazerLang = FazerData.weeklyUrlEn;
+    fazerLang = FazerData.weeklyUrlFi;
   }
 
   try {
