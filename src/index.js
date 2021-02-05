@@ -1,5 +1,6 @@
 import SodexoData from './modules/sodexo-data.js';
 import FazerData from './modules/fazer-data.js';
+import {fetchGetJson} from './modules/network';
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -12,7 +13,7 @@ if ('serviceWorker' in navigator) {
 }
 
 let languageSetting = "fi";
-console.log('index faze', FazerData.getDailyMenu(languageSetting));
+//console.log('index faze', FazerData.getDailyMenu(languageSetting));
 
 let language = document.querySelector(".language");
 language.innerHTML = "EN";
@@ -38,7 +39,7 @@ const renderMenu = (menuData, restaurant) => {
 /**
  * Switch app lang en/fi
  */
-const switchLanguage = () => {
+const switchLanguage = async () => {
   if (languageSetting === "fi") {
     language.innerHTML = "FI";
     random.innerHTML = "pick a dish";
@@ -48,9 +49,28 @@ const switchLanguage = () => {
     random.innerHTML = "satunnainen";
     languageSetting = "fi";
   }
-  renderMenu(SodexoData.getDailyMenu(languageSetting), 'sodexo');
-  renderMenu(FazerData.getDailyMenu(languageSetting), 'fazer');
-  console.log("change language to: ", languageSetting);
+
+  try {
+    const dailyMenuJson = await fetchGetJson(SodexoData.dailyUrl);
+    const parsedMenu = SodexoData.getDailyMenu(dailyMenuJson, languageSetting);
+    renderMenu(parsedMenu, 'sodexo');
+  } catch (error) {
+    console.error(error);
+    // TODO: notify user ?
+  }
+
+  try {
+    // TODO: add multilang support
+    const weeklyMenuJson = await fetchGetJson(FazerData.weeklyUrlFi, true);
+    // Get number of the weekday (0: Sun, 1: Mon, etc.)
+    const weekDay = new Date().getDay();
+    const parsedMenu = FazerData.getDailyMenu(weeklyMenuJson, languageSetting, weekDay);
+    renderMenu(parsedMenu, 'fazer');
+    console.log(weeklyMenuJson);
+  } catch (error) {
+    console.error(error);
+    // TODO: notify user ?
+  }
 };
 
 /**
@@ -71,10 +91,30 @@ const sortMenu = (menu, order) => {
 /**
  * Eventhandler for sort menu button
  */
-let order = 'asc';
-const renderSortedMenu = () => {
-  renderMenu(sortMenu(SodexoData.getDailyMenu(languageSetting), order), 'sodexo');
-  renderMenu(sortMenu(FazerData.getDailyMenu(languageSetting), order), 'fazer');
+let order = 'desc';
+const renderSortedMenu = async () => {
+  try {
+    const dailyMenuJson = await fetchGetJson(SodexoData.dailyUrl);
+    const parsedMenu = SodexoData.getDailyMenu(dailyMenuJson, languageSetting);
+    renderMenu(sortMenu(parsedMenu, order), 'sodexo');
+  } catch (error) {
+    console.error(error);
+    // TODO: notify user ?
+  }
+
+  try {
+    // TODO: add multilang support
+    const weeklyMenuJson = await fetchGetJson(FazerData.weeklyUrlFi, true);
+    // Get number of the weekday (0: Sun, 1: Mon, etc.)
+    const weekDay = new Date().getDay();
+    const parsedMenu = FazerData.getDailyMenu(weeklyMenuJson, languageSetting, weekDay);
+    renderMenu(sortMenu(parsedMenu, order), 'fazer');
+    console.log(weeklyMenuJson);
+  } catch (error) {
+    console.error(error);
+    // TODO: notify user ?
+  }
+
   if (order === 'asc'){
     order = 'desc';
   } else {
@@ -93,24 +133,46 @@ const pickRandomDish = (menu) => {
   return menu[randomIndex];
 };
 
-const displayRandomDish = () => {
-  alert(pickRandomDish(SodexoData.getDailyMenu(languageSetting)));
+const displayRandomDish = async () => {
+  //alert(pickRandomDish(SodexoData.getDailyMenu(languageSetting)));
+  try {
+    const dailyMenuJson = await fetchGetJson(SodexoData.dailyUrl);
+    const parsedMenu = SodexoData.getDailyMenu(dailyMenuJson, languageSetting);
+    alert(pickRandomDish(parsedMenu));
+  } catch (error) {
+    console.error(error);
+    // TODO: notify user ?
+  }
 };
 
 
-const init = () => {
-  document
-    .querySelector("#switch-lang")
-    .addEventListener("click", switchLanguage);
-  document
-    .querySelector("#sort-menu")
-    .addEventListener("click", renderSortedMenu);
-  document
-    .querySelector("#pick-dish")
-    .addEventListener("click", displayRandomDish);
-    renderMenu(SodexoData.getDailyMenu(languageSetting), 'sodexo');
-    renderMenu(FazerData.getDailyMenu(languageSetting), 'fazer');
-  //TODO: render fazer data on page (use fazer-data.js module)
+const init = async () => {
+  document.querySelector('#switch-lang').addEventListener('click', switchLanguage);
+  document.querySelector('#sort-menu').addEventListener('click', renderSortedMenu);
+  document.querySelector('#pick-dish').addEventListener('click', displayRandomDish);
+
+  try {
+    const dailyMenuJson = await fetchGetJson(SodexoData.dailyUrl);
+    const parsedMenu = SodexoData.getDailyMenu(dailyMenuJson, languageSetting);
+    renderMenu(parsedMenu, 'sodexo');
+  } catch (error) {
+    console.error(error);
+    // TODO: notify user ?
+  }
+
+  try {
+    // TODO: add multilang support
+    const weeklyMenuJson = await fetchGetJson(FazerData.weeklyUrlFi, true);
+    // Get number of the weekday (0: Sun, 1: Mon, etc.)
+    const weekDay = new Date().getDay();
+    const parsedMenu = FazerData.getDailyMenu(weeklyMenuJson, languageSetting, weekDay);
+    renderMenu(parsedMenu, 'fazer');
+    console.log(weeklyMenuJson);
+  } catch (error) {
+    console.error(error);
+    // TODO: notify user ?
+  }
+
 };
 init();
 

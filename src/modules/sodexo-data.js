@@ -1,29 +1,29 @@
-import Lunchmenu from "../assets/sodexo-menu.json";
-console.log("lunch menu json", Lunchmenu);
-
-let coursesEn = [];
-let coursesFi = [];
+const today = new Date().toISOString().split('T')[0];
+const dailyUrl = `https://www.sodexo.fi/ruokalistat/output/daily_json/152/${today}`;
 
 /**
  * Parses couse arrays from Sodexo json file
  *
- * @param {Object} sodexoDailyMenu
+ * @param {Object} sodexoDailyMenu in json format
+ * @returns {Object} parsed menu arrays
+ *
  */
 const parseSodexoMenu = (sodexoDailyMenu) => {
+  const coursesEn = [];
+  const coursesFi = [];
   const courses = Object.values(sodexoDailyMenu);
   for (const course of courses) {
     coursesEn.push(course.title_en);
     coursesFi.push(course.title_fi);
   }
+  return {fi: coursesFi, en: coursesEn};
 };
 
-parseSodexoMenu(Lunchmenu.courses);
-
-const getDailyMenu = (lang, dayOfWeek = 0) => {
-  return (lang === 'fi') ? coursesFi : coursesEn;
+const getDailyMenu = (menuData, lang, dayOfWeek = 0) => {
+  const parsedMenu = parseSodexoMenu(menuData.courses);
+  return (lang === 'fi') ? parsedMenu.fi : parsedMenu.en;
 };
 
-const SodexoData = {getDailyMenu};
-
+const SodexoData = {getDailyMenu, dailyUrl};
 
 export default SodexoData;
