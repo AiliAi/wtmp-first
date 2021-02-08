@@ -1,6 +1,4 @@
-// public cors-anywhere accepts only 50 request per hour and should be used only for random testing
-// TODO: swithch to some other service
-const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+import {networkProxyUrl} from "../settings";
 
 /**
  * Creates HTTP Get request
@@ -12,7 +10,7 @@ const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 const fetchGetJson = async (url, useProxy = false) => {
   let response;
   try {
-    response = await fetch(`${useProxy ? proxyUrl : ''}${url}`);
+    response = await fetch(`${useProxy ? networkProxyUrl : ''}${url}`);
     if (!response.ok) {
       throw new Error(`HTTP error ${response.status} ${response.statusText}`);
     }

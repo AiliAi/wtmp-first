@@ -1,6 +1,11 @@
 import SodexoData from './modules/sodexo-data.js';
 import FazerData from './modules/fazer-data.js';
 import {fetchGetJson} from './modules/network';
+import { Sortable } from '@shopify/draggable';
+
+const sortable = new Sortable(document.querySelectorAll('.restorants-list'), {
+  draggable: '.restorant'
+});
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -199,6 +204,10 @@ init();
 const navMenuIcon = document.querySelector(".hamburger");
 const menu = document.getElementById("menu");
 const navContainer = document.querySelector(".container-nav");
+let banner = document.querySelector(".banner");
+let intro = document.querySelector(".intro");
+navMenuIcon.textContent = '☰';
+
 
   const navMenu = () => {
     if (menu.style.display === "block") {
@@ -217,12 +226,7 @@ const navContainer = document.querySelector(".container-nav");
     }
   };
 
-  navMenuIcon.addEventListener("click", navMenu);
-
-  let banner = document.querySelector(".banner");
-  let intro = document.querySelector(".intro");
-
-
+navMenuIcon.addEventListener("click", navMenu);
 
 window.addEventListener("scroll", () => {
   if (window.innerWidth <= 730) {
@@ -276,7 +280,7 @@ function WidthChange2(mediaQuery2) {
     </p>
     </section>`;
   } else {
-    navMenuIcon.style.display='block';
+    navMenuIcon.style.display='inline';
     navContainer.style.backgroundColor = "#9BADBF";
     banner.innerHTML = `
     <div class="banner-left">
