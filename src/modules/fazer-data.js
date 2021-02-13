@@ -38,7 +38,7 @@ const weeklyUrlFi = `${fazerProxyUrl}/api/restaurant/menu/week?language=fi&resta
    // Fazer's index for Monday is 0, in JS it is 1
    dayOfWeek -= 1;
    if (dayOfWeek === -1) {
-     dayOfWeek = 0;
+     dayOfWeek = 6;
    }
    console.log('parsing weekday #', dayOfWeek);
    return parseDailyMenu(menuData, dayOfWeek);

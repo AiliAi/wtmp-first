@@ -17,6 +17,8 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+const themeGreen = document.getElementById("theme-green");
+const themeBlue = document.getElementById("theme-blue");
 let languageSetting = "fi";
 //console.log('index faze', FazerData.getDailyMenu(languageSetting));
 
@@ -24,6 +26,42 @@ let language = document.querySelector(".language");
 language.innerHTML = "EN";
 let random = document.querySelector(".random");
 random.innerHTML = "satunnainen";
+
+/**
+ * Sets theme color to localStorage and changes the theme color for screen.
+ *
+ * @param {String} theme
+ */
+const setTheme = (theme) => {
+  if (theme === 'Green') {
+    localStorage.setItem('panelTheme', theme);
+    document.documentElement.style.setProperty('--light-gray', '#9BADBF');
+    document.documentElement.style.setProperty('--green-nav', '#77D786');
+    console.log('theme changed to Green');
+  }
+  else if (theme === 'Blue') {
+    localStorage.setItem('panelTheme', theme);
+    document.documentElement.style.setProperty('--light-gray', '#b4d0d8');
+    document.documentElement.style.setProperty('--green-nav', '#77c1d7');
+    console.log('theme changed to Blue');
+  }
+};
+
+//checkes if user has theme color in localStorage
+let themeColor = localStorage.getItem('panelTheme');
+if (localStorage.getItem('panelTheme') == ''){
+  setTheme('Green');
+} else {
+  setTheme(themeColor);
+}
+
+//event listeners for theme color buttons
+themeGreen.addEventListener("click", () => {
+  setTheme('Green');
+});
+themeBlue.addEventListener("click", () => {
+  setTheme('Blue');
+});
 
 /**
  * Displays lunch menu items as html list
@@ -49,11 +87,15 @@ const switchLanguage = async () => {
   if (languageSetting === "fi") {
     language.innerHTML = "FI";
     random.innerHTML = "pick a dish";
+    themeGreen.innerHTML = 'theme green';
+    themeBlue.innerHTML = 'theme blue';
     languageSetting = "en";
     fazerLang = FazerData.weeklyUrlEn;
   } else {
     language.innerHTML = "EN";
     random.innerHTML = "satunnainen";
+    themeGreen.innerHTML= 'theme vihreä';
+    themeBlue.innerHTML = 'theme sininen';
     languageSetting = "fi";
     fazerLang = FazerData.weeklyUrlFi;
   }
@@ -196,10 +238,6 @@ init();
 
 
 
-
-
-
-
 //nav opening and closing
 const navMenuIcon = document.querySelector(".hamburger");
 const menu = document.getElementById("menu");
@@ -208,20 +246,23 @@ let banner = document.querySelector(".banner");
 let intro = document.querySelector(".intro");
 navMenuIcon.textContent = '☰';
 
+/*let test = document.querySelector(":root");
+test.style.setProperty('--light-gray', '#cccccc');*/
+//menu.style.filter = 'brightness(0.6)';
 
   const navMenu = () => {
     if (menu.style.display === "block") {
       if (window.innerWidth <= 730) {
       menu.style.display = "none";
-      navContainer.style.backgroundColor = "#77D786";
+      navContainer.style.backgroundColor = "var(--green-nav)";
       } else {
       menu.style.display = "none";
-      navContainer.style.backgroundColor = "#9BADBF";
+      navContainer.style.backgroundColor = "var(--light-gray)";
       }
     } else {
         menu.style.display = "block";
         if (window.innerWidth <= 910) {
-          navContainer.style.backgroundColor = "#77D786";
+          navContainer.style.backgroundColor = "var(--green-nav)";
         }
     }
   };
@@ -231,10 +272,10 @@ navMenuIcon.addEventListener("click", navMenu);
 window.addEventListener("scroll", () => {
   if (window.innerWidth <= 730) {
     menu.style.display = "none";
-    navContainer.style.backgroundColor = "#77D786";
+    navContainer.style.backgroundColor = "var(--green-nav)";
   } else if (window.innerWidth <= 910){
     menu.style.display = "none";
-    navContainer.style.backgroundColor = "#9BADBF";
+    navContainer.style.backgroundColor = "var(--light-gray)";
   } else {
     menu.style.display = "block";
   }
@@ -255,18 +296,21 @@ function WidthChange(mediaQuery1) {
   if (mediaQuery1.matches) {
     menu.style.display = "none";
     navMenuIcon.style.display='inline';
-    navMenuIcon.style.color= "#940E3F";
+    navMenuIcon.style.color= "var(--brown)";
+    menu.style.borderBottom = "3px solid var(--dark-gray)";
   } else {
     menu.style.display = "block";
     navMenuIcon.style.display='none';
+    menu.style.borderBottom = "none";
   }
 }
 
 function WidthChange2(mediaQuery2) {
   if (mediaQuery2.matches) {
+    menu.style.borderBottom = "3px solid var(--dark-gray)";
     menu.style.display = "none";
     navMenuIcon.style.display='inline';
-    navContainer.style.backgroundColor = "#77D786";
+    navContainer.style.backgroundColor = "var(--green-nav)";
     intro.innerHTML = '';
     banner.innerHTML = `
     <section class="intro bc-color">
@@ -280,8 +324,9 @@ function WidthChange2(mediaQuery2) {
     </p>
     </section>`;
   } else {
+    menu.style.borderBottom = "none";
     navMenuIcon.style.display='inline';
-    navContainer.style.backgroundColor = "#9BADBF";
+    navContainer.style.backgroundColor = "var(--light-gray)";
     banner.innerHTML = `
     <div class="banner-left">
     <p>LOUNARI.</p>
