@@ -74,7 +74,15 @@
     font-size: 3vw;
   }
 
-  .banner {
+  .webp .banner {
+    height: 35vh;
+    background-image: url("food-smaller.webp");
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .no-webp .banner {
     height: 35vh;
     background-image: url("food-smaller.jpg");
     position: relative;
@@ -149,7 +157,15 @@
     padding: 2em;
   }
 
-  .banner {
+
+  .webp .banner {
+    height: 35vh;
+    background-image: url("food-small.webp");
+    position: relative;
+    background-repeat: no-repeat;
+  }
+
+  .no-webp .banner {
     height: 35vh;
     background-image: url("food-small.jpg");
     position: relative;
@@ -173,10 +189,17 @@
     background-color: transparent;
   }
 
-  .banner {
+.webp .banner {
     height: 35vh;
-    background-image: url("food-small.jpg");
+    background-image: url("food-small.webp");
     position: relative;
     background-repeat: no-repeat;
   }
+
+.no-webp .banner {
+  height: 35vh;
+  background-image: url("food-small.jpg");
+  position: relative;
+  background-repeat: no-repeat;
+}
 }

@@ -28,6 +28,7 @@
     "write-file-webpack-plugin": "^4.5.1"
   },
   "dependencies": {
-    "@shopify/draggable": "^1.0.0-beta.8"
+    "@shopify/draggable": "^1.0.0-beta.8",
+    "normalize.css": "^8.0.1"
   }
 }

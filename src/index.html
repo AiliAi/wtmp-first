@@ -12,8 +12,9 @@
   </title>
   <link rel="preload" as="font" href="/assets/Lato-Bold.ttf" type="font/ttf" crossorigin="anonymous">
   <link rel="preload" as="font" href="/assets/Lato-Regular.ttf" type="font/ttf" crossorigin="anonymous">
-  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="stylesheet" href="assets/styles-min.css">
   <link rel="stylesheet" href="assets/mobile.css">
+  <link rel="stylesheet" href="assets/modal.css">
 </head>
 <body>
     <!-- Top Navigation Menu -->
@@ -107,7 +108,12 @@
       <h1>LOUNARI.</h1>
       <p>Missä tänään syötäisiin?</p>
     </div>
-    <div class="banner-right"><img src="assets/food-smaller.jpg" alt="" /></div>
+    <div class="banner-right">
+      <picure>
+        <source srcset="assets/food-smaller.webp" type="image/webp">
+        <img src="assets/food-smaller.jpg" alt="" />
+  </picure>
+</div>
   </header>
   <main>
     <div id="container-center">
@@ -128,11 +134,12 @@
         <button id="theme-green" aria-label="green theme">theme vihreä</button>
         <button id="theme-blue" aria-label="blue theme">theme sininen</button>
       </div>
+
       <section class="restorants-list">
 
         <article class="restorant">
           <div class="flex-item image-center">
-            <img src="assets/sodexo_logo.jpg" alt="sodexo logo">
+            <img id="myBtn" src="assets/sodexo_logo.jpg" alt="sodexo logo">
           </div>
           <div class="flex-item">
             <div class="location">
@@ -200,7 +207,20 @@
         Lisää ravintola
       </div>
     </section>
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+          <!-- Modal content -->
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nam ullam id doloremque. At modi hic iusto, non totam eligendi repellendus deserunt a quidem quae. Fugit dolore eaque nihil? Dolorem, harum.</p>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores veniam iure odio alias aspernatur incidunt accusamus corporis nemo eveniet, eaque cumque. Dignissimos incidunt consequuntur fugiat vero. Explicabo nisi ducimus sint.</p>
+          </div>
+        </div>
+
   </main>
 </body>
 
 </html>
+
+
